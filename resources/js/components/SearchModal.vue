@@ -4,7 +4,7 @@
       <div class="absolute inset-0 bg-gray-500 opacity-75"></div>
     </div>
 
-    <div x-transition:enter="ease-out duration-300" x-transition:enter-start="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95" x-transition:enter-end="opacity-100 translate-y-0 sm:scale-100" x-transition:leave="ease-in duration-200" x-transition:leave-start="opacity-100 translate-y-0 sm:scale-100" x-transition:leave-end="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95" class="bg-white rounded-lg px-4 pt-5 pb-4 overflow-hidden shadow-xl transform transition-all sm:max-w-sm sm:w-full sm:p-6">
+    <form x-transition:enter="ease-out duration-300" x-transition:enter-start="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95" x-transition:enter-end="opacity-100 translate-y-0 sm:scale-100" x-transition:leave="ease-in duration-200" x-transition:leave-start="opacity-100 translate-y-0 sm:scale-100" x-transition:leave-end="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95" class="bg-white rounded-lg px-4 pt-5 pb-4 overflow-hidden shadow-xl transform transition-all sm:max-w-sm sm:w-full sm:p-6">
       <div>
         <div class="mx-auto flex items-center justify-center h-12 w-12 rounded-full bg-green-100">
           <svg class="h-6 w-6 text-green-600" stroke="currentColor" fill="none" viewBox="0 0 24 24">
@@ -14,7 +14,7 @@
 
         <div class="mt-3 text-center sm:mt-5">
           <h3 class="text-lg leading-6 font-medium text-gray-900">
-            Notify me
+            Notification options
           </h3>
           <div class="mt-2">
             <p class="text-sm leading-5 text-gray-500">
@@ -25,7 +25,80 @@
         </div>
       </div>
 
+      <div class="mt-3">
+        <label for="distance" class="block text-sm font-medium leading-5 text-gray-700">How far are you willing to travel?</label>
+        <div class="mt-1 relative rounded-md shadow-sm">
+          <input id="distance" pattern="\d*" class="form-input block w-full pr-16 sm:pr-14 sm:text-sm sm:leading-5" value="25" required />
+          <div class="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
+            <span class="text-gray-500 sm:text-sm sm:leading-5">
+              miles
+            </span>
+          </div>
+        </div>
+      </div>
 
+      <div class="mt-4">
+        <label for="distance" class="block text-sm font-medium leading-5 text-gray-700">Which stores do you want to monitor?</label>
+
+        <div>
+          <div class="mt-2 relative flex items-start">
+            <div class="absolute flex items-center h-5">
+              <input name="stores[]" value="wegmans" id="store_wegmans" type="checkbox" class="form-checkbox h-4 w-4 text-indigo-600 transition duration-150 ease-in-out" checked>
+            </div>
+            <div class="pl-7 text-sm leading-5">
+              <label for="store_wegmans" class="font-medium text-gray-700">Wegmans</label>
+            </div>
+          </div>
+          <div class="mt-3 relative flex items-start">
+            <div class="absolute flex items-center h-5">
+              <input name="stores[]" value="harristeeter" id="store_harristeeter" type="checkbox" class="form-checkbox h-4 w-4 text-indigo-600 transition duration-150 ease-in-out">
+            </div>
+            <div class="pl-7 text-sm leading-5">
+              <label for="store_harristeeter" class="font-medium text-gray-700">Harris Teeter</label>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="mt-4">
+        <label for="phone" class="block text-sm font-medium leading-5 text-gray-700">Phone Number</label>
+        <div class="mt-1 relative rounded-md shadow-sm">
+          <div class="absolute inset-y-0 left-0 flex items-center">
+            <select aria-label="Country" class="form-select h-full py-0 pl-3 pr-7 border-transparent bg-transparent text-gray-500 sm:text-sm sm:leading-5">
+              <option>US</option>
+              <option>CA</option>
+            </select>
+          </div>
+          <input id="phone" class="form-input block w-full pl-16 sm:text-sm sm:leading-5" placeholder="+1 (555) 987-6543" required />
+        </div>
+
+        <p class="mt-2 text-sm text-gray-500">The phone number will only be used to send you a text message when a curbside pickup slot becomes available.</p>
+      </div>
+
+      <div class="mt-4">
+        <label for="distance" class="block text-sm font-medium leading-5 text-gray-700">Notify when</label>
+
+        <div>
+          <div class="mt-2 flex items-center">
+            <input id="criteria_anytime" name="form-input criteria_notifications" type="radio" class="form-radio h-4 w-4 text-indigo-600 transition duration-150 ease-in-out" checked>
+            <label for="criteria_anytime" class="ml-3">
+              <span class="block text-sm leading-5 font-medium text-gray-700">Slot is available at any time</span>
+            </label>
+          </div>
+          <div class="mt-3 flex items-center">
+            <input id="criteria_soon" name="form-input criteria_notifications" type="radio" class="form-radio h-4 w-4 text-indigo-600 transition duration-150 ease-in-out">
+            <label for="criteria_soon" class="ml-3">
+              <span class="block text-sm leading-5 font-medium text-gray-700">Slot is available within the next 3 days</span>
+            </label>
+          </div>
+          <div class="mt-3 flex items-center">
+            <input id="criteria_today" name="form-input criteria_notifications" type="radio" class="form-radio h-4 w-4 text-indigo-600 transition duration-150 ease-in-out">
+            <label for="criteria_today" class="ml-3">
+              <span class="block text-sm leading-5 font-medium text-gray-700">Slot is available today</span>
+            </label>
+          </div>
+        </div>
+      </div>
 
       <div class="mt-5 sm:mt-6">
         <span class="flex w-full rounded-md shadow-sm">
@@ -34,7 +107,7 @@
           </button>
         </span>
       </div>
-    </div>
+    </form>
   </div>
 </template>
 <script>
