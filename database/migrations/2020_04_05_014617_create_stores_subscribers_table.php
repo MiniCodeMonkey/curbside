@@ -13,7 +13,7 @@ class CreateStoresSubscribersTable extends Migration
      */
     public function up()
     {
-        Schema::create('stores_subscribers', function (Blueprint $table) {
+        Schema::create('store_subscriber', function (Blueprint $table) {
             $table->id();
 
             $table->unsignedBigInteger('subscriber_id');
@@ -33,6 +33,6 @@ class CreateStoresSubscribersTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('stores_subscribers');
+        Schema::dropIfExists('store_subscriber');
     }
 }

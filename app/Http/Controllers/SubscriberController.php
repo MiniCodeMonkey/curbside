@@ -10,6 +10,7 @@ use Illuminate\Validation\Rule;
 use App\Rules\PhoneNumber;
 use App\Subscriber;
 use App\Chain;
+use App\Store;
 
 class SubscriberController extends Controller
 {
@@ -34,12 +35,18 @@ class SubscriberController extends Controller
         $subscriber->criteria = $request->input('criteria');
         $subscriber->save();
 
-        // TODO
+        $radiusInMeters = $subscriber->radius * 1609.344;
 
-        $chains = $request->input('chains');
+        $chainIds = Chain::whereIn('name', $request->input('chains'))->pluck('id');
+        $matchedStores = Store::whereIn('chain_id', $chainIds)
+            ->distanceSphere('location', $subscriber->location, $radiusInMeters)
+            ->pluck('id');
+
+        $subscriber->stores()->detach();
+        $subscriber->stores()->attach($matchedStores);
 
         return response()->json([
-            'count' => 5
+            'count' => $matchedStores->count()
         ]);
     }
 

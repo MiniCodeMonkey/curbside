@@ -17,7 +17,7 @@ class Subscriber extends Model
         'location'
     ];
 
-    public function store() {
-        return $this->hasMany(Store::class);
+    public function stores() {
+        return $this->belongsToMany(Store::class)->withTimestamps();
     }
 }
