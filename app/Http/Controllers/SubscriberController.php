@@ -8,6 +8,7 @@ use Grimzy\LaravelMysqlSpatial\Types\Point;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 use Illuminate\Validation\ValidationException;
+use App\Notifications\SubscriptionCreated;
 use App\Rules\PhoneNumber;
 use App\Subscriber;
 use App\Chain;
@@ -16,8 +17,6 @@ use App\Store;
 class SubscriberController extends Controller
 {
     public function __invoke(Request $request) {
-        $validChains = Chain::pluck('name');
-
         $request->validate([
             'radius' => ['required', 'integer', 'gte:1', 'lt:300'],
             'chains' => ['required', 'array', Rule::in(Chain::pluck('name'))],
@@ -34,13 +33,22 @@ class SubscriberController extends Controller
         $subscriber->phone = $phone;
         $subscriber->radius = intval($request->input('radius'));
         $subscriber->criteria = $request->input('criteria');
+        $subscriber->status = 'ACTIVE';
         $subscriber->save();
 
-        $radiusInMeters = $subscriber->radius * 1609.344;
+        $stores = $this->updateSubscriptions($subscriber, $request->input('chains'));
 
-        $chainIds = Chain::whereIn('name', $request->input('chains'))->pluck('id');
+        $subscriber->notify(new SubscriptionCreated($stores->count()));
+
+        return response()->json([
+            'count' => $stores->count()
+        ]);
+    }
+
+    private function updateSubscriptions(Subscriber $subscriber, array $chainNames) {
+        $chainIds = Chain::whereIn('name', $chainNames)->pluck('id');
         $matchedStores = Store::whereIn('chain_id', $chainIds)
-            ->distanceSphere('location', $subscriber->location, $radiusInMeters)
+            ->distanceSphere('location', $subscriber->location, $subscriber->radiusInMeters())
             ->pluck('id');
 
         if ($matchedStores->count() <= 0) {
@@ -54,9 +62,7 @@ class SubscriberController extends Controller
         $subscriber->stores()->detach();
         $subscriber->stores()->attach($matchedStores);
 
-        return response()->json([
-            'count' => $matchedStores->count()
-        ]);
+        return $matchedStores;
     }
 
     private function getFormattedPhone($inputPhone) {

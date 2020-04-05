@@ -15,6 +15,7 @@ class CreateSubscribersTable extends Migration
     {
         Schema::create('subscribers', function (Blueprint $table) {
             $table->id();
+            $table->enum('status', ['ACTIVE', 'PAUSED', 'INACTIVE'])->default('ACTIVE');
             $table->point('location')->spatialIndex();
             $table->string('phone', 15)->unique();
             $table->integer('radius')->nullable();
