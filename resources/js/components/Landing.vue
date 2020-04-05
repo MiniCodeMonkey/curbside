@@ -46,7 +46,7 @@
   </div>
 
   <location-modal v-if="loading || errorMessage" :errorMessage="errorMessage" @retry="launch"></location-modal>
-  <notification-subscription-modal v-if="location" :location="location"></notification-subscription-modal>
+  <notification-subscription-modal v-if="location" :location="location" @dismiss="handleDismiss"></notification-subscription-modal>
 </div>
 </template>
 <script>
@@ -73,6 +73,11 @@
         } else {
           this.errorMessage = 'Your browser does not appear to support geolocation. Please try another browser.';
         }
+      },
+      handleDismiss() {
+        this.location = null;
+        this.loading = false;
+        this.errorMessage = null;
       },
       handleError(err) {
         switch (err.code) {

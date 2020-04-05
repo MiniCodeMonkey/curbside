@@ -17,6 +17,4 @@ Route::get('/', function () {
     return view('landing');
 });
 
-Route::get('search', function () {
-    return view('search');
-});
+Route::post('subscribe', 'SubscriberController');

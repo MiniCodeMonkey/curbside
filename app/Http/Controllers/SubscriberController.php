@@ -2,84 +2,52 @@
 
 namespace App\Http\Controllers;
 
-use App\Subscriber;
+use libphonenumber\PhoneNumberUtil;
+use libphonenumber\PhoneNumberFormat;
+use Grimzy\LaravelMysqlSpatial\Types\Point;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
+use App\Rules\PhoneNumber;
+use App\Subscriber;
+use App\Chain;
 
 class SubscriberController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
-    {
-        //
+    public function __invoke(Request $request) {
+        $validChains = Chain::pluck('name');
+
+        $request->validate([
+            'radius' => ['required', 'integer', 'gte:1', 'lt:300'],
+            'chains' => ['required', 'array', Rule::in(Chain::pluck('name'))],
+            'phone' => ['required', new PhoneNumber],
+            'criteria' => ['required', Rule::in(['ANYTIME', 'SOON', 'TODAY'])],
+            'location' => ['required', 'array', 'size:2']
+        ]);
+
+        $phone = $this->getFormattedPhone($request->input('phone'));
+        list($lat, $lng) = $request->input('location');
+
+        $subscriber = Subscriber::firstOrNew(['phone' => $phone]);
+        $subscriber->location = new Point($lat, $lng);
+        $subscriber->phone = $phone;
+        $subscriber->radius = $request->input('radius');
+        $subscriber->criteria = $request->input('criteria');
+        $subscriber->save();
+
+        // TODO
+
+        $chains = $request->input('chains');
+
+        return response()->json([
+            'count' => 5
+        ]);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
+    private function getFormattedPhone($inputPhone) {
+        $phoneUtil = PhoneNumberUtil::getInstance();
+        $proto = $phoneUtil->parse($inputPhone, 'US');
+        $phone = $phoneUtil->format($proto, PhoneNumberFormat::E164);
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Subscriber  $subscriber
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Subscriber $subscriber)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Subscriber  $subscriber
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Subscriber $subscriber)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Subscriber  $subscriber
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, Subscriber $subscriber)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Subscriber  $subscriber
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(Subscriber $subscriber)
-    {
-        //
+        return $phone;
     }
 }

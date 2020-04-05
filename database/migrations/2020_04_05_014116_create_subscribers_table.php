@@ -16,7 +16,9 @@ class CreateSubscribersTable extends Migration
         Schema::create('subscribers', function (Blueprint $table) {
             $table->id();
             $table->point('location')->spatialIndex();
-            $table->string('phone', 15);
+            $table->string('phone', 15)->unique();
+            $table->integer('radius')->nullable();
+            $table->enum('criteria', ['ANYTIME', 'SOON', 'TODAY'])->default('ANYTIME');
             $table->timestamps();
         });
     }

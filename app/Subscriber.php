@@ -9,6 +9,10 @@ class Subscriber extends Model
 {
     use SpatialTrait;
 
+    protected $fillable = [
+        'phone'
+    ];
+
     protected $spatialFields = [
         'location'
     ];
