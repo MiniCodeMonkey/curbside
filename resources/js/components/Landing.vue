@@ -46,7 +46,7 @@
   </div>
 
   <location-modal v-if="loading || errorMessage" :errorMessage="errorMessage" @retry="launch"></location-modal>
-  <search-modal v-if="location" :location="location"></search-modal>
+  <notification-subscription-modal v-if="location" :location="location"></notification-subscription-modal>
 </div>
 </template>
 <script>

@@ -25,12 +25,11 @@
 
             <div class="mt-3 text-center sm:mt-5">
               <h3 class="text-lg leading-6 font-medium text-gray-900">
-                Notification options
+                Set up notification
               </h3>
               <div class="mt-2">
                 <p class="text-sm leading-5 text-gray-500">
-                  Where should we lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-                  tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam.
+                  Give us a few more details and we'll automatically text you when a desired curbside slot becomes available.
                 </p>
               </div>
             </div>
@@ -46,6 +45,7 @@
                 </span>
               </div>
             </div>
+            <p class="mt-2 text-sm text-gray-500">We will only look at stores within this radius.</p>
           </div>
 
           <div class="mt-4">
@@ -83,11 +83,11 @@
               <input id="phone" class="form-input block w-full pl-16 sm:text-sm sm:leading-5" placeholder="+1 (555) 987-6543" required />
             </div>
 
-            <p class="mt-2 text-sm text-gray-500">The phone number will only be used to send you a text message when a curbside pickup slot becomes available.</p>
+            <p class="mt-2 text-sm text-gray-500">The phone number will only be used for notifications.</p>
           </div>
 
           <div class="mt-4">
-            <label for="distance" class="block text-sm font-medium leading-5 text-gray-700">Notify when</label>
+            <label for="distance" class="block text-sm font-medium leading-5 text-gray-700">Notify when&hellip;</label>
 
             <div>
               <div class="mt-2 flex items-center">
