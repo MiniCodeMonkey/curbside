@@ -1,5 +1,5 @@
 <template>
-  <form class="bg-white rounded-lg px-4 pt-5 pb-4 overflow-scroll shadow-xl transform max-h-screen sm:max-w-sm sm:w-full sm:p-6">
+  <form class="bg-white rounded-lg px-4 pt-5 pb-4 overflow-hidden shadow-xl transform sm:max-w-sm sm:w-full sm:p-6">
     <div>
       <div class="mx-auto flex items-center justify-center h-12 w-12 rounded-full bg-green-100">
         <svg class="h-6 w-6 text-green-600" stroke="currentColor" fill="none" viewBox="0 0 24 24">
@@ -67,7 +67,7 @@
             <option>US</option>
           </select>
         </div>
-        <input id="phone" v-model="phone" class="form-input block w-full pl-16 sm:text-sm sm:leading-5" placeholder="+1 (555) 987-6543" required />
+        <input id="phone" v-model="phone" class="form-input block w-full pl-16 sm:text-sm sm:leading-5" placeholder="(555) 987-6543" required />
       </div>
 
       <p class="mt-2 text-sm text-gray-500">The phone number will only be used for notifications.</p>

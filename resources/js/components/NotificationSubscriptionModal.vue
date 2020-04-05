@@ -1,5 +1,5 @@
 <template>
-  <div class="fixed top-0 inset-x-0 z-10 px-4 pb-6 sm:inset-0 sm:p-0 sm:flex sm:items-center sm:justify-center">
+  <div class="absolute top-0 inset-x-0 z-10 px-4 pb-6 sm:inset-0 sm:p-0 sm:flex sm:items-center sm:justify-center">
     <transition
         appear
         enter-active-class="transition-opacity ease-out duration-300" enter-class="transition-opacity opacity-0" enter-to-class="transition-opacity opacity-100"
