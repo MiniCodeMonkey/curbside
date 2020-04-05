@@ -7,6 +7,7 @@ use libphonenumber\PhoneNumberFormat;
 use Grimzy\LaravelMysqlSpatial\Types\Point;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
+use Illuminate\Validation\ValidationException;
 use App\Rules\PhoneNumber;
 use App\Subscriber;
 use App\Chain;
@@ -31,7 +32,7 @@ class SubscriberController extends Controller
         $subscriber = Subscriber::firstOrNew(['phone' => $phone]);
         $subscriber->location = new Point($lat, $lng);
         $subscriber->phone = $phone;
-        $subscriber->radius = $request->input('radius');
+        $subscriber->radius = intval($request->input('radius'));
         $subscriber->criteria = $request->input('criteria');
         $subscriber->save();
 
@@ -41,6 +42,14 @@ class SubscriberController extends Controller
         $matchedStores = Store::whereIn('chain_id', $chainIds)
             ->distanceSphere('location', $subscriber->location, $radiusInMeters)
             ->pluck('id');
+
+        if ($matchedStores->count() <= 0) {
+            $distance = $subscriber->radius == 1
+                ? $subscriber->radius . ' mile'
+                : $subscriber->radius . ' miles';
+
+            throw ValidationException::withMessages(['radius' => 'Did not find any stores within ' . $distance . '.']);
+        }
 
         $subscriber->stores()->detach();
         $subscriber->stores()->attach($matchedStores);
