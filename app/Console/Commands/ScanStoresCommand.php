@@ -3,8 +3,8 @@
 namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
-use App\Subscriber;
-use App\Store;
+use App\Jobs\ScanChain;
+use App\Chain;
 
 class ScanStoresCommand extends Command
 {
@@ -39,10 +39,9 @@ class ScanStoresCommand extends Command
      */
     public function handle()
     {
-        $stores = Store::has('subscribers')
-            ->where('subscribers.status', 'ACTIVE')
-            ->get();
-
-        dd($stores);
+        // Scan chains in parallel
+        Chain::all()->each(function (Chain $chain) {
+            dispatch(new ScanChain($chain));
+        });
     }
 }
