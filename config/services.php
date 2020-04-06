@@ -38,4 +38,9 @@ return [
         'from' => env('TWILIO_FROM_NUMBER'),
     ],
 
+    'harristeeter' => [
+        'email' => env('HARRISTEETER_EMAIL'),
+        'password' => env('HARRISTEETER_PASSWORD'),
+    ]
+
 ];

@@ -27,6 +27,10 @@ class Subscriber extends Model
         return $this->belongsToMany(Store::class)->withTimestamps();
     }
 
+    public function scopeActive($query) {
+        return $query->where('status', 'ACTIVE');
+    }
+
     public function radiusInMeters() {
         return $this->radius * 1609.344;
     }
