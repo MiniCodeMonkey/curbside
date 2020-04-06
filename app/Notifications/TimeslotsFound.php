@@ -49,7 +49,8 @@ class TimeslotsFound extends Notification
         $message = implode(PHP_EOL, [
             'Great news! Curbside pickup slots available.',
             $this->formatSlots($notifiable)->join(PHP_EOL),
-            'We will stop notifying you now unless you reply with CONTINUE'
+            'We will stop notifying you now unless you reply with CONTINUE',
+            'Want to change your search criteria? Just head to https://curb.run'
         ]);
 
         info($notifiable->phone .': ' . $message);
