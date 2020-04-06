@@ -23,11 +23,11 @@
         </p>
 
         <p class="mt-3 text-lg leading-7 text-gray-500">
-          ...if only it wasn't such a pain to switch between grocery stores and selecting pickup slots on the individual grocery store websites.
+          &hellip;if only it wasn't such a pain to switch between grocery stores and selecting pickup slots on the individual grocery store websites.
         </p>
 
         <p class="mt-3 text-lg leading-7 text-gray-500">
-          Curb run <strong>automates</strong> this whole process by checking the individual grocery store websites for you and texts you as soon as a grocery pickup slot becomes available.
+          Curb Run <strong>automates</strong> this whole process by checking the individual grocery store websites for you and texts you as soon as a grocery pickup slot becomes available.
         </p>
 
         <p class="mt-3 text-lg leading-7 text-gray-500">

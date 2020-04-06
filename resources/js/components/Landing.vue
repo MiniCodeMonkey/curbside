@@ -23,7 +23,7 @@
               slot
             </h2>
             <p class="mt-3 text-base text-gray-500 sm:mt-5 sm:text-lg sm:max-w-xl sm:mx-auto md:mt-5 md:text-xl lg:mx-0">
-              Pickup slots are scarce right now. Let us automatically check for pickup slots across grocery stores in your area. Stop refreshing your browser &mdash; get notified when a slot opens up instead.
+              Pickup slots are scarce right now. Let us automatically scan for pickup slots across grocery stores in your area. Stop refreshing your browser &mdash; get notified when a slot opens up instead.
             </p>
             <div class="mt-5 sm:mt-8 sm:flex sm:justify-center lg:justify-start">
               <div class="rounded-md shadow">

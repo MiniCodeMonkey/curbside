@@ -23,7 +23,8 @@
           <div class="mt-5">
             <h5 class="text-lg leading-6 font-medium text-gray-900">Create grocery account</h5>
             <p class="mt-2 text-base leading-6 text-gray-500">
-              Sign up for an account with the grocery store(s) that you would like to use.
+              Sign up for an account with the grocery stores that you would like to use.
+              Make sure that a payment method is in place so no extra steps are necessary to place your order.
             </p>
           </div>
         </div>
@@ -35,6 +36,7 @@
             <h5 class="text-lg leading-6 font-medium text-gray-900">Prepare your cart</h5>
             <p class="mt-2 text-base leading-6 text-gray-500">
               Fill up your cart with everything you'd like to order, making sure that it is ready to go.
+              Feel free to prepare a cart for multiple stores if you want to increase your chances of getting a good slot.
             </p>
           </div>
         </div>
@@ -43,9 +45,9 @@
             3
           </div>
           <div class="mt-5">
-            <h5 class="text-lg leading-6 font-medium text-gray-900">Receive text message</h5>
+            <h5 class="text-lg leading-6 font-medium text-gray-900">Wait for text message</h5>
             <p class="mt-2 text-base leading-6 text-gray-500">
-              As soon as you receive a text message &mdash; log in to your grocery store account and claim your slot.
+              We'll notify you as soon as a slot becomes available. Hurry! Log in to your grocery store account and claim your slot.
             </p>
           </div>
         </div>
