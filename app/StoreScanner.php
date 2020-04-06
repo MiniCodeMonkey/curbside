@@ -7,12 +7,11 @@ use Illuminate\Support\Collection;
 
 abstract class StoreScanner
 {
-    protected $store;
     protected $client;
     protected $baseUri = null;
+    protected $sessionEstablished = false;
 
-    public function __construct(Store $store) {
-        $this->store = $store;
+    public function __construct() {
         $this->client = new Client([
             'base_uri' => $this->baseUri,
             'timeout' => 30,
@@ -23,5 +22,16 @@ abstract class StoreScanner
         ]);
     }
 
-    abstract public function scanPickupSlots(): ?Collection;
+    protected function prepareSession() {
+        // Can optionally be implemented by subclasses
+    }
+
+    public function scan(Store $store): ?Collection {
+        if (!$this->sessionEstablished) {
+            $this->prepareSession();
+            $this->sessionEstablished = true;
+        }
+
+        return null;
+    }
 }

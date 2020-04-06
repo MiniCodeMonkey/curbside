@@ -12,7 +12,7 @@ class HarrisTeeterStoreScanner extends StoreScanner
 {
     protected $baseUri = 'https://www.harristeeter.com/';
 
-    private function prepareSession() {
+    protected function prepareSession() {
         // Establish cookies first
         $this->client->get('/');
 
@@ -53,11 +53,11 @@ class HarrisTeeterStoreScanner extends StoreScanner
         ]);
     }
 
-    public function scanPickupSlots(): ?Collection {
-        $this->prepareSession();
-        $this->changeStore($this->store);
+    public function scan(Store $store): ?Collection {
+        parent::scan($store);
+        $this->changeStore($store);
 
-        $path = 'shop/api/v1/el/stores/' . $this->store->identifier . '/fulfillments/pickup/times?Email=' . config('services.harristeeter.email');
+        $path = 'shop/api/v1/el/stores/' . $store->identifier . '/fulfillments/pickup/times?Email=' . config('services.harristeeter.email');
         $response = json_decode((string)$this->client->get($path, [
             'headers' => [
                 'referer' => 'https://www.harristeeter.com/shop/store/383/reserve-timeslot',
@@ -68,13 +68,13 @@ class HarrisTeeterStoreScanner extends StoreScanner
             ->filter(function ($item) {
                 return $item->AvailableSlotCount > 0;
             })
-            ->map(function ($item) {
+            ->map(function ($item) use ($store) {
                 $startTime = Carbon::parse($item->StartTime);
                 $endTime = Carbon::parse($item->EndTime);
 
                 return Timeslot::updateOrCreate([
-                    'store_id' => $this->store->id,
-                    'date' => $startTime,
+                    'store_id' => $store->id,
+                    'date' => $startTime->format('Y-m-d'),
                     'from' => $startTime,
                     'to' => $endTime,
                 ]);

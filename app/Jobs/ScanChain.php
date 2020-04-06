@@ -8,7 +8,7 @@ use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Support\Collection;
 use App\Notifications\TimeslotsFound;
 use App\Chain;
 use App\Subscriber;
@@ -39,16 +39,25 @@ class ScanChain implements ShouldQueue
      */
     public function handle()
     {
-        $timeslots = $this->chain->stores()
+        $storeScanner = $this->chain->getStoreScanner();
+
+        $stores = $this->chain->stores()
             ->whereHas('subscribers', function (Builder $query) {
                 $query->where('status', 'ACTIVE');
             })
-            ->get()
-            ->mapWithKeys(function (Store $store) {
-                return [$store->id => $store->scanPickupSlots()];
-            });
+            ->get();
 
-        // TODO
+        info('Scanning for timeslots at ' . $stores->count() . ' ' . $this->chain->name . ' stores');
+
+        $before = microtime(true);
+        $timeslots = $stores->flatMap(function (Store $store) use ($storeScanner) {
+            $timeslots = $storeScanner->scan($store);
+            info($timeslots->count() . ' timeslot(s) found for ' . $store->chain->name . ' ' . $store->name);
+
+            return $timeslots;
+        });
+        $after = microtime(true);
+        info('Completed ' . $this->chain->name . ' scan in ' . round(($after - $before) / 60) . ' minute(s) with a total of ' . $timeslots->count() . ' timeslot(s) found.');
 
         $subscribers = Subscriber::active()
             ->with('stores')
@@ -62,8 +71,8 @@ class ScanChain implements ShouldQueue
 
         $timeslots = $timeslots
             // Timeslots for stores that the user subscribed to
-            ->filter(function ($timeslot, $storeId) use ($subscribedStoreIds) {
-                return in_array($storeId, $subscribedStoreIds);
+            ->filter(function ($timeslot) use ($subscribedStoreIds) {
+                return in_array($timeslot->store_id, $subscribedStoreIds);
             })
             // Timeslots that are within the users set time criteria threshold
             ->filter(function ($timeslot) use ($subscriber) {
@@ -81,6 +90,7 @@ class ScanChain implements ShouldQueue
             $subscriber->status = 'PAUSED';
             $subscriber->save();
 
+            info('Notifying subscriber #' . $subscriber->id);
             $subscriber->notify(new TimeslotsFound($timeslots));
         }
     }

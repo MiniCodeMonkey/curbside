@@ -27,20 +27,4 @@ class Store extends Model
     public function timeslots() {
         return $this->hasMany(Timeslot::class);
     }
-
-    public function scanPickupSlots(): ?Collection {
-        $providers = [
-            'Wegmans' => WegmansStoreScanner::class,
-            'Harris Teeter' => HarrisTeeterStoreScanner::class,
-        ];
-
-        $providerClass = $providers[$this->chain->name] ?? null;
-
-        if ($providerClass) {
-            $provider = new $providerClass($this);
-            return $provider->scanPickupSlots();
-        }
-
-        return null;
-    }
 }

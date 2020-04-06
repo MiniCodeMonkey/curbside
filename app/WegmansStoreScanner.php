@@ -11,7 +11,7 @@ class WegmansStoreScanner extends StoreScanner
 {
     protected $baseUri = 'https://shop.wegmans.com/api/v2/';
 
-    private function prepareSession() {
+    protected function prepareSession() {
         $this->client->post('user_sessions', [
             'json' => [
                 'binary' => 'web-ecom',
@@ -42,9 +42,9 @@ class WegmansStoreScanner extends StoreScanner
         }
     }
 
-    public function scanPickupSlots(): ?Collection {
-        $this->prepareSession();
-        $this->changeStore($this->store);
+    public function scan(Store $store): ?Collection {
+        parent::scan($store);
+        $this->changeStore($store);
 
         $cart = json_decode((string)$this->client->get('cart')->getBody());
 
@@ -55,10 +55,10 @@ class WegmansStoreScanner extends StoreScanner
             'user_timezone' => 'America%2FNew_York'
         ]])->getBody());
 
-        $timeslots = collect($response->items)->map(function ($item) {
+        $timeslots = collect($response->items)->map(function ($item) use ($store) {
             return Timeslot::updateOrCreate([
-                'store_id' => $this->store->id,
-                'date' => Carbon::parse($item->fulfillment_date),
+                'store_id' => $store->id,
+                'date' => Carbon::parse($item->fulfillment_date)->format('Y-m-d'),
                 'from' => $item->timeslot->from_time,
                 'to' => $item->timeslot->to_time
             ]);

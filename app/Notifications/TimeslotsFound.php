@@ -59,8 +59,8 @@ class TimeslotsFound extends Notification
     }
 
     private function formatSlots(Subscriber $subscriber) {
-        return $this->timeslots->take(5)->map(function ($timeslot, $storeId) use ($subscriber) {
-            $store = Store::with('chain')->find($storeId);
+        return $this->timeslots->take(5)->map(function ($timeslot) use ($subscriber) {
+            $store = $timeslot->store;
 
             $distanceDescription = '(~' . round($subscriber->distanceTo($store)) . ' miles away)';
 

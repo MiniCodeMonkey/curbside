@@ -16,4 +16,8 @@ class Timeslot extends Model
         'from',
         'to',
     ];
+
+    public function store() {
+        return $this->belongsTo(Store::class);
+    }
 }

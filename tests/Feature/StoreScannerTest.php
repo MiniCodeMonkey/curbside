@@ -11,7 +11,9 @@ class StoreScannerTest extends TestCase
     {
         Chain::all()->each(function (Chain $chain) {
             $store = $chain->stores()->first();
-            $slots = $store->scanPickupSlots();
+            $storeScanner = $chain->getStoreScanner();
+
+            $slots = $storeScanner->scan($store);
             $this->assertNotNull($slots);
         });
     }
