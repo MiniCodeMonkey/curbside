@@ -2,7 +2,7 @@ id: 8706
 name: curbside
 environments:
     production:
-        domain: curbside.run
+        domain: curb.run
         database: vapor
         memory: 1024
         cli-memory: 512
