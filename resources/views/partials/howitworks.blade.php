@@ -17,10 +17,8 @@
       </div>
       <div class="mt-10 sm:grid sm:grid-cols-2 sm:col-gap-8 sm:row-gap-10 lg:col-span-2 lg:mt-0">
         <div>
-          <div class="flex items-center justify-center h-12 w-12 rounded-md bg-orange-500 text-white">
-            <svg class="h-6 w-6" stroke="currentColor" fill="none" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9"/>
-            </svg>
+          <div class="flex items-center justify-center h-12 w-12 rounded-md bg-orange-500 text-white font-semibold text-xl">
+            1
           </div>
           <div class="mt-5">
             <h5 class="text-lg leading-6 font-medium text-gray-900">Create grocery account</h5>
@@ -30,10 +28,8 @@
           </div>
         </div>
         <div class="mt-10 sm:mt-0">
-          <div class="flex items-center justify-center h-12 w-12 rounded-md bg-orange-500 text-white">
-            <svg class="h-6 w-6" stroke="currentColor" fill="none" viewBox="0 0 24 24">
-              <path d="M3 3H5L5.4 5M7 13H17L21 5H5.4M7 13L5.4 5M7 13L4.70711 15.2929C4.07714 15.9229 4.52331 17 5.41421 17H17M17 17C15.8954 17 15 17.8954 15 19C15 20.1046 15.8954 21 17 21C18.1046 21 19 20.1046 19 19C19 17.8954 18.1046 17 17 17ZM9 19C9 20.1046 8.10457 21 7 21C5.89543 21 5 20.1046 5 19C5 17.8954 5.89543 17 7 17C8.10457 17 9 17.8954 9 19Z" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-            </svg>
+          <div class="flex items-center justify-center h-12 w-12 rounded-md bg-orange-500 text-white font-semibold text-xl">
+            2
           </div>
           <div class="mt-5">
             <h5 class="text-lg leading-6 font-medium text-gray-900">Prepare your cart</h5>
@@ -43,23 +39,19 @@
           </div>
         </div>
         <div class="mt-10 sm:mt-0">
-          <div class="flex items-center justify-center h-12 w-12 rounded-md bg-orange-500 text-white">
-            <svg class="h-6 w-6" stroke="currentColor" fill="none" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
-            </svg>
+          <div class="flex items-center justify-center h-12 w-12 rounded-md bg-orange-500 text-white font-semibold text-xl">
+            3
           </div>
           <div class="mt-5">
-            <h5 class="text-lg leading-6 font-medium text-gray-900">Receive text message from us</h5>
+            <h5 class="text-lg leading-6 font-medium text-gray-900">Receive text message</h5>
             <p class="mt-2 text-base leading-6 text-gray-500">
               As soon as you receive a text message &mdash; log in to your grocery store account and claim your slot.
             </p>
           </div>
         </div>
         <div class="mt-10 sm:mt-0">
-          <div class="flex items-center justify-center h-12 w-12 rounded-md bg-orange-500 text-white">
-            <svg class="h-6 w-6" stroke="currentColor" fill="none" viewBox="0 0 24 24">
-              <path d="M5 3V7M3 5H7M6 17V21M4 19H8M13 3L15.2857 9.85714L21 12L15.2857 14.1429L13 21L10.7143 14.1429L5 12L10.7143 9.85714L13 3Z" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-            </svg>
+          <div class="flex items-center justify-center h-12 w-12 rounded-md bg-orange-500 text-white font-semibold text-xl">
+            4
           </div>
           <div class="mt-5">
             <h5 class="text-lg leading-6 font-medium text-gray-900">That's it!</h5>
