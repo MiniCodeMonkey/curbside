@@ -8,6 +8,10 @@
             <a href="/">
               <svg class="h-8 w-auto sm:h-10" fill="#d03801" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><path d="M37.5 50h10.02a2.5 2.5 0 0 0 1.57-4.446l-4.822-4.821A2.501 2.501 0 0 0 42.5 40h-5a2.5 2.5 0 0 0-2.5 2.5v5a2.5 2.5 0 0 0 2.5 2.5zM22.5 50H30a2.5 2.5 0 0 0 2.5-2.5v-5A2.5 2.5 0 0 0 30 40h-2.5c-.663 0-1.299.264-1.768.732l-5 5A2.5 2.5 0 0 0 22.5 50z"/><path d="M27.063 65h20.875c1.033 2.908 3.804 5 7.063 5s6.03-2.092 7.063-5H67.5a2.5 2.5 0 0 0 2.5-2.5v-15a2.5 2.5 0 0 0-2.5-2.5h-8.965L46.768 33.232A2.504 2.504 0 0 0 45 32.5H25c-.663 0-1.299.264-1.768.732l-9.583 9.582-6.94 2.313A2.503 2.503 0 0 0 5 47.5v15A2.5 2.5 0 0 0 7.5 65h5.438c1.033 2.908 3.804 5 7.063 5s6.029-2.092 7.062-5zM55 65c-1.379 0-2.5-1.121-2.5-2.5S53.621 60 55 60s2.5 1.121 2.5 2.5S56.379 65 55 65zm-42.062-5H10V49.302l5.791-1.93c.368-.123.702-.33.977-.604l9.268-9.268h17.93l11.768 11.768A2.496 2.496 0 0 0 57.5 50H65v10h-2.938c-1.033-2.908-3.804-5-7.063-5s-6.03 2.092-7.063 5H27.063c-1.033-2.908-3.804-5-7.063-5s-6.03 2.092-7.062 5zM20 65c-1.379 0-2.5-1.121-2.5-2.5S18.621 60 20 60s2.5 1.121 2.5 2.5S21.379 65 20 65z"/><path d="M92.5 65h-15a2.5 2.5 0 0 0-2.5 2.5V70H7.5c-3.224 0-3.224 5 0 5h70a2.5 2.5 0 0 0 2.5-2.5V70h12.5c3.224 0 3.224-5 0-5z"/></svg>
             </a>
+
+            <h2 class="font-semibold ml-2">
+              <a href="/">Curb Run</a>
+            </h2>
           </nav>
         </div>
         <div class="mt-10 mx-auto max-w-screen-xl px-4 sm:mt-12 sm:px-6 md:mt-16 lg:mt-20 lg:px-8 xl:mt-28">
@@ -19,7 +23,7 @@
               slot
             </h2>
             <p class="mt-3 text-base text-gray-500 sm:mt-5 sm:text-lg sm:max-w-xl sm:mx-auto md:mt-5 md:text-xl lg:mx-0">
-              Pickup slots are scarce right now. Stop refreshing your browser and get notified when a slot opens up instead.
+              Pickup slots are scarce right now. We will automatically check for pickup slots across grocery stores in your area. Stop refreshing your browser and get notified when a slot opens up instead.
             </p>
             <div class="mt-5 sm:mt-8 sm:flex sm:justify-center lg:justify-start">
               <div class="rounded-md shadow">
@@ -28,7 +32,7 @@
                 </button>
               </div>
               <div class="mt-3 sm:mt-0 sm:ml-3">
-                <a href="/about" class="w-full flex items-center justify-center px-8 py-3 border border-transparent text-base leading-6 font-medium rounded-md text-orange-700 bg-orange-100 hover:text-orange-600 hover:bg-orange-50 focus:outline-none focus:shadow-outline focus:border-orange-300 transition duration-150 ease-in-out md:py-4 md:text-lg md:px-10">
+                <a href="#about" class="w-full flex items-center justify-center px-8 py-3 border border-transparent text-base leading-6 font-medium rounded-md text-orange-700 bg-orange-100 hover:text-orange-600 hover:bg-orange-50 focus:outline-none focus:shadow-outline focus:border-orange-300 transition duration-150 ease-in-out md:py-4 md:text-lg md:px-10">
                   About
                 </a>
               </div>
