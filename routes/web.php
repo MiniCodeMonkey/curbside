@@ -18,3 +18,4 @@ Route::get('/', function () {
 });
 
 Route::post('subscribe', 'SubscriberController');
+Route::post('webhook', 'TwilioWebhookController');

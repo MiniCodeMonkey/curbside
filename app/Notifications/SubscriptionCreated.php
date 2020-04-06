@@ -13,15 +13,17 @@ class SubscriptionCreated extends Notification
     use Queueable;
 
     private $storesCount;
+    private $isRepeat;
 
     /**
      * Create a new notification instance.
      *
      * @return void
      */
-    public function __construct(int $storesCount)
+    public function __construct(int $storesCount, bool $isRepeat = false)
     {
         $this->storesCount = $storesCount;
+        $this->isRepeat = $isRepeat;
     }
 
     /**
@@ -48,8 +50,18 @@ class SubscriptionCreated extends Notification
             ? $this->storesCount . ' store'
             : $this->storesCount . ' stores';
 
+        $intro = $this->isRepeat
+            ? 'Got it. Well continue to monitor'
+            : 'Hello! This is ' . $appName . '. We\'re now monitoring';
+
+        $message = implode(PHP_EOL, [
+            $intro . ' ' . $storesCountDescription . ' for you. We\'ll let you know as soon as a desired curbside pickup slot becomes available.',
+            'Need to change your search criteria? Just head to https://curb.run',
+            'No longer wish to hear from us? Just reply with DONE'
+        ]);
+
         return (new TwilioSmsMessage())
-            ->content('Hello! This is ' . $appName . '. We\'re now monitoring ' . $storesCountDescription . ' for you. We\'ll let you know as soon as a desired curbside pickup slot becomes available. No longer wish to hear from us? Just reply with STOP');
+            ->content($message);
     }
 
     /**
