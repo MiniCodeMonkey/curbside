@@ -97,8 +97,6 @@ class ScanChain implements ShouldQueue
 
     private function matchToTimeslots(Subscriber $subscriber, Collection $timeslots)
     {
-        info('Looking for matching timeslots for subscriber #' . $subscriber->id);
-
         $subscribedStoreIds = $subscriber->stores()->pluck('stores.id')->toArray();
 
         $timeslots = $timeslots
@@ -118,9 +116,9 @@ class ScanChain implements ShouldQueue
                 return Carbon::parse($timeslot->date->format('Y-m-d') . ' ' . $timeslot->from);
             });
 
-        info('Found ' . $timeslots->count() . ' timeslot(s) for subscriber #' . $subscriber->id);
-
         if ($timeslots->count() > 0) {
+            info('Found ' . $timeslots->count() . ' timeslot(s) for subscriber #' . $subscriber->id);
+
             $subscriber->status = 'PAUSED';
             $subscriber->save();
 
