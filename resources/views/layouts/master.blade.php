@@ -16,6 +16,7 @@
     <link rel="manifest" href="{{ asset('site.webmanifest') }}">
     <link rel="stylesheet" href="{{ asset('css/main.css') }}">
     <link rel="stylesheet" href="https://rsms.me/inter/inter.css">
+    <script>window.__ASSET_URL__ = '{{ asset('/') }}';</script>
   </head>
 <body>
 <div id="app">

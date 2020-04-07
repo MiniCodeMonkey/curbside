@@ -11,8 +11,6 @@ const mix = require('laravel-mix');
  |
  */
 
-mix.setResourceRoot(`${process.env.ASSET_URL || ''}/`);
-
 mix.js('resources/js/app.js', 'public/js');
 
 mix.postCss('resources/css/main.css', 'public/css', [
