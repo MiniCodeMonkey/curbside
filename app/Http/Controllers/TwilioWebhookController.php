@@ -22,6 +22,8 @@ class TwilioWebhookController extends Controller
     }
 
     private function handleAction(Subscriber $subscriber, string $message) {
+        $message = strtoupper($message);
+
         switch ($message) {
             case 'CONTINUE':
                 if ($subscriber->status !== 'ACTIVE') {
