@@ -2,12 +2,11 @@
 
 use Illuminate\Database\Seeder;
 use Grimzy\LaravelMysqlSpatial\Types\Point;
-use Goutte\Client as GoutteClient;
 use GuzzleHttp\Client;
 use App\Chain;
 use App\Store;
 
-class StoreSeeder extends Seeder
+class KrogerStoreSeeder extends Seeder
 {
     // Thank you alltheplaces <3
     const LOCATION_SEED_FILE_URL = 'https://raw.githubusercontent.com/alltheplaces/alltheplaces/master/locations/searchable_points/us_centroids_100mile_radius.csv';
@@ -22,9 +21,7 @@ class StoreSeeder extends Seeder
     public function run()
     {
         $this->ensureLocationSeedFile();
-        $this->seedWegmans();
-        $this->seedHarrisTeeter();
-        $this->seedKroger();
+        $this->seed();
     }
 
     private function ensureLocationSeedFile() {
@@ -49,74 +46,7 @@ class StoreSeeder extends Seeder
         }
     }
 
-    private function seedWegmans() {
-        if (Chain::where('name', 'Wegmans')->first()) {
-            return;
-        }
-
-        $chain = new Chain();
-        $chain->name = 'Wegmans';
-        $chain->url = 'https://www.wegmans.com';
-        $chain->save();
-
-        $json = json_decode(file_get_contents('https://shop.wegmans.com/api/v2/stores'));
-
-        collect($json->items)->each(function ($item) use ($chain) {
-            if ($item->has_pickup) {
-                $store = new Store();
-                $store->name = ucwords(strtolower($item->name));
-                $store->identifier = $item->id;
-                $store->street = $item->address->address1;
-                $store->city = $item->address->city;
-                $store->state = $item->address->province;
-                $store->zip = $item->address->postal_code;
-                $store->country = substr($item->address->country, 0, 2);
-
-                $store->location = new Point($item->location->latitude, $item->location->longitude);
-
-                $chain->stores()->save($store);
-            }
-        });
-    }
-
-    private function seedHarrisTeeter() {
-        if (Chain::where('name', 'Harris Teeter')->first()) {
-            return;
-        }
-
-        $chain = new Chain();
-        $chain->name = 'Harris Teeter';
-        $chain->url = 'https://www.harristeeter.com';
-        $chain->save();
-
-        $client = new GoutteClient();
-        $client->request('POST', 'https://www.harristeeter.com/api/checkLogin');
-        $client->request('GET', 'https://www.harristeeter.com/store/#/app/store-locator');
-        $client->request('GET', 'https://www.harristeeter.com/api/v1/stores/search?Address=20003&Radius=1000000&AllStores=true&NewOrdering=false&OnlyPharmacy=false&OnlyFreshFood=false');
-
-        $json = json_decode($client->getResponse()->getContent());
-
-        collect($json->Data)->each(function ($item) use ($chain) {
-            $storeId = $item->ExpressLaneStoreID ?? null;
-
-            if ($storeId) {
-                $store = new Store();
-                $store->name = $item->StoreName;
-                $store->identifier = $item->ExpressLaneStoreID;
-                $store->street = $item->Street;
-                $store->city = $item->City;
-                $store->state = $item->State;
-                $store->zip = $item->ZipCode;
-                $store->country = $item->Country;
-
-                $store->location = new Point($item->Latitude, $item->Longitude);
-
-                $chain->stores()->save($store);
-            }
-        });
-    }
-
-    private function seedKroger() {
+    private function seed() {
         if (Chain::where('name', 'Kroger')->first()) {
             return;
         }
