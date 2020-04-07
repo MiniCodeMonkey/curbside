@@ -61,12 +61,18 @@ class ScanChain implements ShouldQueue
 
         $subscribers = Subscriber::active()
             ->with('stores')
-            ->each(function (Subscriber $subscriber) use ($timeslots) {
-                $this->matchToTimeslots($subscriber, $timeslots);
-            });
+            ->get();
+
+        info('Looking through ' . $subscribers->count() . ' subscribers');
+
+        $subscribers->each(function (Subscriber $subscriber) use ($timeslots) {
+            $this->matchToTimeslots($subscriber, $timeslots);
+        });
     }
 
     private function matchToTimeslots(Subscriber $subscriber, Collection $timeslots) {
+        info('Looking for matching timeslots for subscriber #' . $subscriber->id);
+
         $subscribedStoreIds = $subscriber->stores()->pluck('stores.id')->toArray();
 
         $timeslots = $timeslots
@@ -85,6 +91,8 @@ class ScanChain implements ShouldQueue
             ->sortBy(function ($timeslot) {
                 return Carbon::parse($timeslot->date->format('Y-m-d') . ' ' . $timeslot->from);
             });
+
+        info('Found ' . $timeslots->count() . ' timeslot(s) for subscriber #' . $subscriber->id);
 
         if ($timeslots->count() > 0) {
             $subscriber->status = 'PAUSED';
