@@ -22,7 +22,7 @@ class TwilioWebhookController extends Controller
     }
 
     private function handleAction(Subscriber $subscriber, string $message) {
-        $message = strtoupper($message);
+        $message = trim(strtoupper($message), '.');
 
         switch ($message) {
             case 'CONTINUE':

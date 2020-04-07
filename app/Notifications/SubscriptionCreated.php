@@ -51,13 +51,13 @@ class SubscriptionCreated extends Notification
             : $this->storesCount . ' stores';
 
         $intro = $this->isRepeat
-            ? 'Got it. Well continue to monitor'
+            ? 'Got it. We\'ll continue to monitor'
             : 'Hello! This is ' . $appName . '. We\'re now monitoring';
 
         $message = implode(PHP_EOL, [
             $intro . ' ' . $storesCountDescription . ' for you. We\'ll let you know as soon as a desired curbside pickup slot becomes available.',
             'Need to change your search criteria? Just head to https://curb.run',
-            'No longer wish to hear from us? Just reply with DONE'
+            'No longer wish to hear from us? Just reply with DONE.'
         ]);
 
         return (new TwilioSmsMessage())

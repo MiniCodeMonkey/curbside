@@ -47,9 +47,9 @@ class TimeslotsFound extends Notification
     public function toTwilio($notifiable)
     {
         $message = implode(PHP_EOL, [
-            'Great news! Curbside pickup slots available.',
+            'Great news! Curbside pickup slots are available.',
             $this->formatSlots($notifiable)->join(PHP_EOL),
-            'We will stop notifying you now unless you reply with CONTINUE',
+            'We will stop notifying you now unless you reply with CONTINUE.',
             'Want to change your search criteria? Just head to https://curb.run'
         ]);
 
