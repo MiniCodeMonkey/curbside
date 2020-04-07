@@ -199,8 +199,12 @@ fragment storeSearchResult on Store {
 }
 GRAPHQL;
 
+        $savedStoreIds = [];
+
         foreach ($this->locationSeed as $index => $location) {
-            echo round($index / count($this->locationSeed) * 100) . '%' . PHP_EOL;
+            if ($index % 10 === 0) {
+                echo round($index / count($this->locationSeed) * 100) . '%' . PHP_EOL;
+            }
 
             $searchParameters = [
               'query' => $query,
@@ -221,8 +225,6 @@ GRAPHQL;
             ]);
 
             $json = json_decode((string)$response->getBody());
-
-            $savedStoreIds = [];
 
             foreach ($json->data->storeGeolocationSearch->stores as $item) {
                 $storeId = $item->divisionNumber . $item->storeNumber;
