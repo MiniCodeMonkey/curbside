@@ -15,23 +15,23 @@
           About Curb Run
         </h4>
         <p class="mt-3 text-lg leading-7 text-gray-500">
-          Curbside pickup is the safest option for getting groceries right now (for store employees and people buying alike), but it's super frustrating when there aren't any slots available due to high demand.
+          Curbside pickup is the safest option for getting groceries right now, for store employees and people buying groceries alike. But slots can be frustratingly hard to get.
         </p>
 
         <p class="mt-3 text-lg leading-7 text-gray-500">
-          Chances are that you live in an area with access to several different grocery stores, so why not look at all grocery stores in a reasonable driving distance to increase the chances of finding a slot?
+          Chances are you live in an area with several different grocery stores, so why not look at all grocery stores in a reasonable driving distance to increase the chances of finding a slot?
         </p>
 
         <p class="mt-3 text-lg leading-7 text-gray-500">
-          &hellip;if only it wasn't such a pain to switch between grocery stores and selecting pickup slots on the individual grocery store websites.
+          Curb Run <strong>automates</strong> this whole process by scanning the individual grocery store websites for you. We'll send you a text as soon as a pickup slot becomes available.
+        </p>
+        
+                <p class="mt-3 text-lg leading-7 text-gray-500">
+          Make sure your cart is completely ready to go! Slots disappear quickly.
         </p>
 
         <p class="mt-3 text-lg leading-7 text-gray-500">
-          Curb Run <strong>automates</strong> this whole process by checking the individual grocery store websites for you and texts you as soon as a grocery pickup slot becomes available.
-        </p>
-
-        <p class="mt-3 text-lg leading-7 text-gray-500">
-          Questions? You can reach out to us on Twitter at <a href="https://twitter.com/MathiasHansen" class="text-orange-600 hover:text-orange-700">@MathiasHansen</a> or <a href="https://twitter.com/mjwhansen" class="text-orange-600 hover:text-orange-700">@mjwhansen</a>.
+          Questions? You can reach out to us on Twitter at <a href="https://twitter.com/MathiasHansen" class="text-orange-600 hover:text-orange-700">@MathiasHansen</a> and <a href="https://twitter.com/mjwhansen" class="text-orange-600 hover:text-orange-700">@mjwhansen</a>.
         </p>
       </div>
 
