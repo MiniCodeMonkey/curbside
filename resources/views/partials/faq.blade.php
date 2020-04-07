@@ -22,7 +22,7 @@
             </dt>
             <dd class="mt-2">
               <p class="text-base leading-6 text-gray-500">
-                We currently check stores about every 5 minutes. We are trying to strike a balance between not causing excessive load to the store websites and having checks be frequent enough not to miss slots. We are continously keeping an eye on the load and tweak parameters as necessary.
+                We currently check stores about every 5 minutes. We are trying to strike a balance between not causing excessive load to the store websites and having checks be frequent enough not to miss slots. We are continously keeping an eye on the volume and tweak parameters as necessary.
               </p>
             </dd>
           </div>
@@ -34,7 +34,7 @@
             </dt>
             <dd class="mt-2">
               <p class="text-base leading-6 text-gray-500">
-                Maybe, it depends&hellip; Tweet <a href="https://twitter.com/MathiasHansen" class="text-orange-600 hover:text-orange-700">@MathiasHansen</a> with your request and we'll look into whether it is possible to add the store. Keep in mind that for now we'd like to focus on grocery stores.
+                Maybe, it depends&hellip; Tweet <a href="https://twitter.com/MathiasHansen" class="text-orange-600 hover:text-orange-700">@MathiasHansen</a> and <a href="https://twitter.com/mjwhansen" class="text-orange-600 hover:text-orange-700">@mjwhansene</a>with your request and we'll look into whether it's possible to add the store. Keep in mind that for now we'd like to focus on grocery stores.
               </p>
             </dd>
           </div>
@@ -44,7 +44,7 @@
             </dt>
             <dd class="mt-2">
               <p class="text-base leading-6 text-gray-500">
-                No! We are not interested in profiting off of this and are happy to cover the limited costs associated with running the service. We do not share your submitted data with anyone, the only organization that gets to see your phone number is our text service provider, <a href="https://www.twilio.com/legal/privacy" target="_blank">Twilio</a>.
+                No! This is completely free. Curbside pickup is better for public health and this makes it less frustrating. We are happy to cover the limited costs associated with running the service. We do not share your submitted data with anyone; the only organization that gets to see your phone number is our text service provider, <a href="https://www.twilio.com/legal/privacy" target="_blank">Twilio</a>.
               </p>
             </dd>
           </div>
