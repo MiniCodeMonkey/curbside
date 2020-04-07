@@ -40,20 +40,12 @@
       <label for="chains" class="block text-sm font-medium leading-5 text-gray-700">Which stores do you want to monitor?</label>
 
       <div>
-        <div class="mt-2 relative flex items-start">
+        <div v-for="(chainName, index) in availableChains" class="mt-3 relative flex items-start">
           <div class="absolute flex items-center h-5">
-            <input name="chains" v-model="chains" value="Wegmans" id="store_wegmans" type="checkbox" class="form-checkbox h-4 w-4 text-orange-600 transition duration-150 ease-in-out" checked>
+            <input name="chains" v-model="chains" :value="chainName" :id="'store_' + index" type="checkbox" class="form-checkbox h-4 w-4 text-orange-600 transition duration-150 ease-in-out">
           </div>
           <div class="pl-7 text-sm leading-5">
-            <label for="store_wegmans" class="font-medium text-gray-700">Wegmans</label>
-          </div>
-        </div>
-        <div class="mt-3 relative flex items-start">
-          <div class="absolute flex items-center h-5">
-            <input name="chains" v-model="chains" value="Harris Teeter" id="store_harristeeter" type="checkbox" class="form-checkbox h-4 w-4 text-orange-600 transition duration-150 ease-in-out">
-          </div>
-          <div class="pl-7 text-sm leading-5">
-            <label for="store_harristeeter" class="font-medium text-gray-700">Harris Teeter</label>
+            <label :for="'store_' + index" class="font-medium text-gray-700">{{ chainName }}</label>
           </div>
         </div>
       </div>
@@ -119,7 +111,26 @@
         radius: 25,
         chains: ['Wegmans'],
         phone: '',
-        criteria: 'ANYTIME'
+        criteria: 'ANYTIME',
+        availableChains: [
+          "Wegmans",
+          "Harris Teeter",
+          "Kroger",
+          "City Market",
+          "Copps",
+          "Dillons",
+          "Fred Meyer",
+          "Fry's",
+          "Gerbes",
+          "JayC Foods Stores",
+          "King Soopers",
+          "Metro Market",
+          "Owen's Market",
+          "Pick 'n Save",
+          "QFC",
+          "Ralphs",
+          "Smith's",
+        ]
       };
     },
     methods: {

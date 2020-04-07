@@ -1,5 +1,5 @@
 <template>
-  <div class="absolute top-0 inset-x-0 z-10 pt-4 px-4 pb-6 sm:inset-0 sm:p-0 sm:flex sm:items-center sm:justify-center">
+  <div class="absolute top-0 inset-x-0 z-10 pt-4 px-4 pb-6 sm:p-0 sm:flex sm:items-center sm:justify-center">
     <transition
         appear
         enter-active-class="transition-opacity ease-out duration-300" enter-class="transition-opacity opacity-0" enter-to-class="transition-opacity opacity-100"
@@ -37,6 +37,9 @@
     },
     methods: {
       handleSubmit: function (radius, chains, phone, criteria) {
+        window.scrollTo(0, 0);
+        this.isSaving = true;
+
         axios.post('subscribe', {
           radius,
           chains,
@@ -45,7 +48,10 @@
           location: this.location
         }).then(response => {
           this.subscriptionResponse = response.data;
+          this.isSaving = false;
         }).catch(err => {
+          this.isSaving = false;
+
           if (err.response && err.response.data && err.response.data.errors) {
             const errors = err.response.data.errors;
             this.errorMessage = errors[Object.keys(errors)[0]].join(' ');

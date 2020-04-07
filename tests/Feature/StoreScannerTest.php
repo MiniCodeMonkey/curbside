@@ -9,7 +9,7 @@ class StoreScannerTest extends TestCase
 {
     public function testGetPickupSlots()
     {
-        Chain::all()->each(function (Chain $chain) {
+        Chain::orderBy('created_at', 'DESC')->get()->each(function (Chain $chain) {
             $store = $chain->stores()->first();
             $storeScanner = $chain->getStoreScanner();
 

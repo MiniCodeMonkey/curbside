@@ -17,11 +17,12 @@ class Chain extends Model
 
     public function getStoreScanner(): ?StoreScanner {
         $providers = [
-            'Wegmans' => WegmansStoreScanner::class,
-            'Harris Teeter' => HarrisTeeterStoreScanner::class,
+            'https://www.wegmans.com' => WegmansStoreScanner::class,
+            'https://www.harristeeter.com' => HarrisTeeterStoreScanner::class,
+            'https://www.kroger.com' => KrogerStoreScanner::class,
         ];
 
-        $providerClass = $providers[$this->name] ?? null;
+        $providerClass = $providers[$this->url] ?? null;
 
         if ($providerClass) {
             return new $providerClass();
