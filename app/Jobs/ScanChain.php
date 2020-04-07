@@ -9,6 +9,7 @@ use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Collection;
+use Illuminate\Cache\FileStore;
 use App\Notifications\TimeslotsFound;
 use App\Chain;
 use App\Subscriber;
@@ -19,6 +20,8 @@ use Carbon\Carbon;
 class ScanChain implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
+
+    const LOCK_DURATION_SECONDS = 600; // 10 minutes
 
     private $chain;
 
@@ -38,6 +41,28 @@ class ScanChain implements ShouldQueue
      * @return void
      */
     public function handle()
+    {
+        $cache = cache();
+
+        if (method_exists($cache, 'lock')) {
+            $lock = $cache->lock(__CLASS__ . $this->chain->id, self::LOCK_DURATION_SECONDS);
+
+            if ($lock->get()) {
+                try {
+                    $this->scan();
+                } finally {
+                    $lock->release();
+                }
+            } else {
+                info('Could not get lock for ' . __CLASS___ . ': ' . $this->chain->name);
+            }
+        } else {
+            info('Warning: Not acquiring lock for ' . __CLASS__);
+            $this->scan();
+        }
+    }
+
+    private function scan()
     {
         $storeScanner = $this->chain->getStoreScanner();
 
@@ -70,7 +95,8 @@ class ScanChain implements ShouldQueue
         });
     }
 
-    private function matchToTimeslots(Subscriber $subscriber, Collection $timeslots) {
+    private function matchToTimeslots(Subscriber $subscriber, Collection $timeslots)
+    {
         info('Looking for matching timeslots for subscriber #' . $subscriber->id);
 
         $subscribedStoreIds = $subscriber->stores()->pluck('stores.id')->toArray();
