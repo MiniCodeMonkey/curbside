@@ -6,6 +6,11 @@ use Illuminate\Database\Eloquent\Model;
 
 class Chain extends Model
 {
+    protected $fillable = [
+        'name',
+        'url'
+    ];
+
     public function stores() {
         return $this->hasMany(Store::class);
     }
