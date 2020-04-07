@@ -34,7 +34,7 @@
             </dt>
             <dd class="mt-2">
               <p class="text-base leading-6 text-gray-500">
-                Maybe, it depends&hellip; Tweet <a href="https://twitter.com/MathiasHansen" class="text-orange-600 hover:text-orange-700">@MathiasHansen</a> and <a href="https://twitter.com/mjwhansen" class="text-orange-600 hover:text-orange-700">@mjwhansene</a>with your request and we'll look into whether it's possible to add the store. Keep in mind that for now we'd like to focus on grocery stores.
+                Maybe, it depends&hellip; Tweet <a href="https://twitter.com/MathiasHansen" class="text-orange-600 hover:text-orange-700">@MathiasHansen</a> and <a href="https://twitter.com/mjwhansen" class="text-orange-600 hover:text-orange-700">@mjwhansen</a> with your request and we'll look into whether it's possible to add the store. Keep in mind that for now we'd like to focus on grocery stores.
               </p>
             </dd>
           </div>
