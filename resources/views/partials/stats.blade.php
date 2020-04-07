@@ -5,10 +5,10 @@
         So far, so good
       </h2>
     </div>
-    <div class="mt-10 text-center sm:max-w-3xl sm:mx-auto sm:grid sm:grid-cols-3 sm:gap-8">
+    <div class="mt-10 text-center sm:max-w-3xl sm:mx-auto sm:grid sm:grid-cols-4 sm:gap-5">
       <div>
         <p class="text-5xl leading-none font-extrabold text-white">
-          {{ App\Store::count() }}
+          {{ number_format(App\Store::count()) }}
         </p>
         <p class="mt-2 text-lg leading-6 font-medium text-teal-200">
           stores
@@ -16,7 +16,7 @@
       </div>
       <div class="mt-10 sm:mt-0">
         <p class="text-5xl leading-none font-extrabold text-white">
-          {{ App\Timeslot::count() }}
+          {{ number_format(App\Timeslot::count()) }}
         </p>
         <p class="mt-2 text-lg leading-6 font-medium text-teal-200">
           timeslots found
@@ -24,10 +24,18 @@
       </div>
       <div class="mt-10 sm:mt-0">
         <p class="text-5xl leading-none font-extrabold text-white">
-          {{ App\Subscriber::active()->count() }}
+          {{ number_format(App\Subscriber::active()->count()) }}
         </p>
         <p class="mt-2 text-lg leading-6 font-medium text-teal-200">
           active subscriptions
+        </p>
+      </div>
+      <div class="mt-10 sm:mt-0">
+        <p class="text-5xl leading-none font-extrabold text-white">
+          {{ App\Timeslot::latestCreatedAt(true) }}
+        </p>
+        <p class="mt-2 text-lg leading-6 font-medium text-teal-200">
+          latest timeslot found
         </p>
       </div>
     </div>
