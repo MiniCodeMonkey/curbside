@@ -15,7 +15,7 @@
           About Curb Run
         </h4>
         <p class="mt-3 text-lg leading-7 text-gray-500">
-          Curbside grocery pickup is arguable a safer alternative for everyone when grocery shopping during the pandemic. The problem is that pickup slots are scarce due to high demand.
+          Curbside pickup is the safest option for getting groceries right now (for store employees and people buying alike), but it's super frustrating when there aren't any slots available due to high demand.
         </p>
 
         <p class="mt-3 text-lg leading-7 text-gray-500">
