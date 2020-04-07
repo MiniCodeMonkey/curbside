@@ -11,8 +11,9 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        $this->call(KrogerStoreSeeder::class);
-        $this->call(HarrisTeeterStoreSeeder::class);
         $this->call(WegmansStoreSeeder::class);
+        $this->call(HarrisTeeterStoreSeeder::class);
+        $this->call(KrogerStoreSeeder::class);
+        $this->call(HEBStoreSeeder::class);
     }
 }

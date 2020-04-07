@@ -25,7 +25,7 @@ class KrogerStoreSeeder extends Seeder
     }
 
     private function ensureLocationSeedFile() {
-        $locationSeedFilename = storage_path('searchable_points.csv');
+        $locationSeedFilename = storage_path('searchable_points_100.csv');
 
         if (!file_exists($locationSeedFilename)) {
             file_put_contents($locationSeedFilename, file_get_contents(self::LOCATION_SEED_FILE_URL));
