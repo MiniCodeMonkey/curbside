@@ -38,6 +38,16 @@
               </p>
             </dd>
           </div>
+          <div class="mt-12">
+            <dt class="text-lg leading-6 font-medium text-gray-900">
+              Does this cost anything? What's the catch?
+            </dt>
+            <dd class="mt-2">
+              <p class="text-base leading-6 text-gray-500">
+                No! We are not interested in profiting off of this and are happy to cover the limited costs associated with running the service. We do not share your submitted data with anyone, the only organization that gets to see your phone number is our text service provider, <a href="https://www.twilio.com/legal/privacy" target="_blank">Twilio</a>.
+              </p>
+            </dd>
+          </div>
         </div>
       </dl>
     </div>
