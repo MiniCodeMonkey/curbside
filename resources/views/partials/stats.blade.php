@@ -27,7 +27,7 @@
           {{ number_format(App\Subscriber::active()->count()) }}
         </p>
         <p class="mt-2 text-lg leading-6 font-medium text-teal-200">
-          active subscriptions
+          scanners running
         </p>
       </div>
       <div class="mt-10 sm:mt-0">
@@ -35,7 +35,7 @@
           {{ App\Timeslot::latestCreatedAt(true) }}
         </p>
         <p class="mt-2 text-lg leading-6 font-medium text-teal-200">
-          latest timeslot found
+          last timeslot found
         </p>
       </div>
     </div>
