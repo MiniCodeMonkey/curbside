@@ -65,7 +65,7 @@ class TimeslotsFound extends Notification
             $store = $timeslot->store;
 
             $distance = round($subscriber->distanceTo($store));
-            $distanceDescription = '(~' . $distance . ' ' . Str::plural('mile', $distance); . ' away)';
+            $distanceDescription = '(~' . $distance . ' ' . Str::plural('mile', $distance) . ' away)';
 
             return implode(PHP_EOL, [
                 $store->chain->name . ' ' . $store->name . ' ' . $distanceDescription,
