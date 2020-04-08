@@ -3,7 +3,7 @@
 ## Stack
 
 * **Backend:** Laravel 7
-* **Frontend:** Tailwind CSS (using components from Tailwind UI)
+* **Frontend:** Vue.js, Tailwind CSS (using components from Tailwind UI)
 * **Infrastructure:** Hosted on AWS Lambda via Laravel Vapor
 
 ## Development
