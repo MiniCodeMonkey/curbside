@@ -115,6 +115,7 @@
         availableChains: [
           "Wegmans",
           "Harris Teeter",
+          "H-E-B",
           "Kroger",
           "City Market",
           "Copps",

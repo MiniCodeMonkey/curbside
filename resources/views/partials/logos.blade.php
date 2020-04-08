@@ -7,9 +7,15 @@
       <div class="col-span-1 flex justify-center py-8 px-8 bg-gray-50">
         <img class="max-h-12" src="{{ asset('img/logos/wegmans.svg') }}" alt="Wegmans" />
       </div>
+
       <div class="col-span-1 flex justify-center py-8 px-8 bg-gray-50">
         <img class="max-h-12" src="{{ asset('img/logos/harristeeter.svg') }}" alt="Harris Teeter" />
       </div>
+
+      <div class="col-span-1 flex justify-center py-8 px-8 bg-gray-50">
+        <img class="max-h-12" src="{{ asset('img/logos/heb.svg') }}" alt="H-E-B" />
+      </div>
+
       <div class="col-span-1 flex justify-center py-8 px-8 bg-gray-50">
         <img class="max-h-12" src="{{ asset('img/logos/fredmeyer.svg') }}" alt="Fred Meyer" />
       </div>
