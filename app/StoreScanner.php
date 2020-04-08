@@ -11,6 +11,9 @@ abstract class StoreScanner
     protected $baseUri = null;
     protected $sessionEstablished = false;
 
+    // NOTE: Only disable if you fully understand the implications
+    protected $enableSSLVerification = true;
+
     public function __construct() {
         $this->client = new Client([
             'base_uri' => $this->baseUri,
@@ -18,7 +21,8 @@ abstract class StoreScanner
             'cookies' => true,
             'headers' => [
                 'User-Agent' => 'Curb Run/1.0'
-            ]
+            ],
+            'verify' => $this->enableSSLVerification
         ]);
     }
 

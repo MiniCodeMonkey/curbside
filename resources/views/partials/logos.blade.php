@@ -75,6 +75,14 @@
       <div class="col-span-1 flex justify-center py-8 px-8 bg-gray-50">
         <img class="max-h-12" src="{{ asset('img/logos/owensmarket.png') }}" alt="Owen's Market" />
       </div>
+
+      <div class="col-span-1 flex justify-center py-8 px-8 bg-gray-50">
+        <img class="max-h-12" src="{{ asset('img/logos/pricechopper.png') }}" alt="Price Chopper" />
+      </div>
+
+      <div class="col-span-1 flex justify-center py-8 px-8 bg-gray-50">
+        <img class="max-h-12" src="{{ asset('img/logos/market32.jpg') }}" alt="Market 32" />
+      </div>
     </div>
     <p class="text-center text-xs leading-6 text-gray-400">
       * Not affiliated or endorsed by any grocery store or chain

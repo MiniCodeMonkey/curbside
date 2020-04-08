@@ -116,6 +116,7 @@
           "Wegmans",
           "Harris Teeter",
           "H-E-B",
+          "Price Chopper",
           "Kroger",
           "City Market",
           "Copps",

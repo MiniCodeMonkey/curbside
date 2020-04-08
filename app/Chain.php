@@ -21,6 +21,7 @@ class Chain extends Model
             'https://www.harristeeter.com' => HarrisTeeterStoreScanner::class,
             'https://www.kroger.com' => KrogerStoreScanner::class,
             'https://www.heb.com' => HEBStoreScanner::class,
+            'https://www.pricechopper.com' => PriceChopperStoreScanner::class,
         ];
 
         $providerClass = $providers[$this->url] ?? null;
