@@ -113,7 +113,10 @@ class ScanChain implements ShouldQueue
                 );
             })
             ->sortBy(function ($timeslot) {
-                return Carbon::parse($timeslot->date->format('Y-m-d') . ' ' . $timeslot->from);
+                return Carbon::parse(
+                    $timeslot->date->format('Y-m-d') . ' ' .
+                    Carbon::parse($timeslot->from)->format('H:i:s')
+                );
             });
 
         if ($timeslots->count() > 0) {
