@@ -17,9 +17,5 @@ Route::get('/', function () {
     return view('landing');
 });
 
-Route::get('trigger-error', function () {
-    throw new \Exception('Test exception');
-});
-
 Route::post('subscribe', 'SubscriberController');
 Route::post('webhook', 'TwilioWebhookController');
