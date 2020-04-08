@@ -43,7 +43,7 @@ return [
 
         'vapor' => [
             'driver' => 'stack',
-            'channels' => ['stderr', 'bugsnag'],
+            'channels' => ['bugsnag', 'stderr'],
             'ignore_exceptions' => false,
         ],
 
