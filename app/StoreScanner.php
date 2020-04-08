@@ -17,7 +17,7 @@ abstract class StoreScanner
     public function __construct() {
         $this->client = new Client([
             'base_uri' => $this->baseUri,
-            'timeout' => 60,
+            'timeout' => 15,
             'cookies' => true,
             'headers' => [
                 'User-Agent' => 'Curb Run/1.0'
