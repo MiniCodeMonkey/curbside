@@ -57,7 +57,7 @@ class ScanChain implements ShouldQueue
                     $lock->release();
                 }
             } else {
-                info('Could not get lock for ' . __CLASS___ . ': ' . $this->chain->name);
+                info('Could not get lock for ' . __CLASS__ . ': ' . $this->chain->name);
             }
         }
     }
