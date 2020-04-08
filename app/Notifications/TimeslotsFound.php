@@ -8,6 +8,7 @@ use NotificationChannels\Twilio\TwilioSmsMessage;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Notification;
+use Illuminate\Support\Str;
 use App\Store;
 use App\Subscriber;
 
@@ -63,7 +64,8 @@ class TimeslotsFound extends Notification
         return $this->timeslots->take(5)->map(function ($timeslot) use ($subscriber) {
             $store = $timeslot->store;
 
-            $distanceDescription = '(~' . round($subscriber->distanceTo($store)) . ' miles away)';
+            $distance = round($subscriber->distanceTo($store));
+            $distanceDescription = '(~' . $distance . ' ' . Str::plural('mile', $distance); . ' away)';
 
             return implode(PHP_EOL, [
                 $store->chain->name . ' ' . $store->name . ' ' . $distanceDescription,
