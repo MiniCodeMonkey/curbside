@@ -17,5 +17,9 @@ Route::get('/', function () {
     return view('landing');
 });
 
+Route::get('stores', function () {
+    return view('stores');
+});
+
 Route::post('subscribe', 'SubscriberController');
 Route::post('webhook', 'TwilioWebhookController');
