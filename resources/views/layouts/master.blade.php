@@ -6,8 +6,11 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <meta name="msapplication-TileColor" content="#da532c">
     <meta name="theme-color" content="#ffffff">
-    <meta property="og:title" content="Curb Run" />
-    <meta property="og:description" content="Get your grocery store curbside pickup slot" />
+    <meta property="og:title" content="Get your grocery curbside pickup slot">
+    <meta property="og:site_name" content="Curb Run">
+    <meta property="og:url" content="https://curb.run">
+    <meta property="og:description" content="Pickup slots are scarce right now. We'll automatically scan for pickup slots across grocery stores in your area and text you when we find one.">
+    <meta property="og:type" content="website">
     <meta property="og:image" content="{{ asset('android-chrome-512x512.png') }}" />
     <title>Curb Run - Get your grocery store curbside pickup slot</title>
     <link rel="apple-touch-icon" sizes="180x180" href="{{ asset('apple-touch-icon.png') }}">
