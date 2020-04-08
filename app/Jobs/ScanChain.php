@@ -2,6 +2,8 @@
 
 namespace App\Jobs;
 
+use Throwable;
+use Bugsnag\BugsnagLaravel\Facades\Bugsnag;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
@@ -53,6 +55,8 @@ class ScanChain implements ShouldQueue
             if ($lock->get()) {
                 try {
                     $this->scan();
+                } catch (Throwable $e) {
+                    Bugsnag::notifyException($e);
                 } finally {
                     $lock->release();
                 }
