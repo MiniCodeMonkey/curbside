@@ -44,7 +44,10 @@ class ScanChain implements ShouldQueue
     {
         $cache = cache();
 
-        if (method_exists($cache, 'lock')) {
+        if (app()->environment('local')) {
+            info('Warning: Not acquiring lock for ' . __CLASS__);
+            $this->scan();
+        } else {
             $lock = $cache->lock(__CLASS__ . $this->chain->id, self::LOCK_DURATION_SECONDS);
 
             if ($lock->get()) {
@@ -56,9 +59,6 @@ class ScanChain implements ShouldQueue
             } else {
                 info('Could not get lock for ' . __CLASS___ . ': ' . $this->chain->name);
             }
-        } else {
-            info('Warning: Not acquiring lock for ' . __CLASS__);
-            $this->scan();
         }
     }
 
