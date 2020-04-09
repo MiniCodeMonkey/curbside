@@ -42,7 +42,7 @@ class KrogerStoreScanner extends StoreScanner
                 'accept-encoding' => 'gzip, deflate, br',
                 'content-type' => 'application/json;charset=UTF-8',
                 'origin' => 'https://www.kroger.com',
-                'referer' => 'https://www.kroger.com/stores/search?searchText=virginia&selectedStoreFilters=Pickup',
+                'referer' => 'https://www.kroger.com/',
                 'user-agent' => 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.132 Safari/537.36'
             ]
         ])->getBody());
