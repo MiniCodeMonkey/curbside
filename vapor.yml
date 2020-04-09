@@ -6,7 +6,7 @@ environments:
         database: vapor
         memory: 1024
         cli-memory: 512
-        queue-concurrency: 5
+        queue-concurrency: 50
         queue-timeout: 900
         build:
             - 'composer install --no-dev'
