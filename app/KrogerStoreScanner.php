@@ -12,7 +12,7 @@ class KrogerStoreScanner extends StoreScanner
     protected $baseUri = 'https://www.kroger.com/fulfillment/api/v1/';
 
     protected function prepareSession() {
-        if (!app()->environment('production')) {
+        if (app()->environment('production')) {
             // Randomize start to ensure that all Kroger chain scanners do not execute at the same time
             $sleepDuration = mt_rand(10, 120);
             info('[Kroger] Waiting ' . $sleepDuration . ' seconds');
