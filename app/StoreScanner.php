@@ -36,6 +36,9 @@ abstract class StoreScanner
             $this->sessionEstablished = true;
         }
 
+        // To reduce server load for store websites
+        sleep(1);
+
         return null;
     }
 }
