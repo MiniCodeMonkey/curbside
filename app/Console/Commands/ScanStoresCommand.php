@@ -2,6 +2,7 @@
 
 namespace App\Console\Commands;
 
+use InvalidArgumentException;
 use Illuminate\Console\Command;
 use App\Jobs\ScanChain;
 use App\Chain;
@@ -13,7 +14,7 @@ class ScanStoresCommand extends Command
      *
      * @var string
      */
-    protected $signature = 'scan';
+    protected $signature = 'scan {--chain=}';
 
     /**
      * The console command description.
@@ -39,9 +40,21 @@ class ScanStoresCommand extends Command
      */
     public function handle()
     {
-        // Scan chains in parallel
-        Chain::all()->each(function (Chain $chain) {
+        $chainName = $this->option('chain');
+
+        if ($chainName) {
+            $chain = Chain::where('name', $chainName)->first();
+
+            if (!$chain) {
+                throw new InvalidArgumentException('Could not find any chains named "' . $chainName . '"');
+            }
+
             dispatch(new ScanChain($chain));
-        });
+        } else {
+            // Scan chains in parallel
+            Chain::all()->each(function (Chain $chain) {
+                dispatch(new ScanChain($chain));
+            });
+        }
     }
 }
