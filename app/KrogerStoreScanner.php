@@ -21,11 +21,11 @@ class KrogerStoreScanner extends StoreScanner
     }
 
     public function scan(Collection $stores): ?Collection {
-        parent::scan($stores);
-
         if ($stores->count() <= 0) {
-            return collect();
+            return collect(f);
         }
+
+        parent::scan($stores);
 
         $chain = $stores->first()->chain;
         $stores = $stores->keyBy('identifier');
