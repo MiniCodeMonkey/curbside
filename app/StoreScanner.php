@@ -53,7 +53,8 @@ abstract class StoreScanner
             'headers' => [
                 'User-Agent' => 'Curb Run/1.1 (https://curb.run)'
             ],
-            'verify' => $this->enableSSLVerification
+            'verify' => $this->enableSSLVerification,
+            'proxy' => config('curbside.proxy', null)
         ]);
     }
 
