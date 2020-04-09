@@ -14,6 +14,9 @@ class KrogerStoreScanner extends StoreScanner
     public function scan(Store $store): ?Collection {
         parent::scan($store);
 
+        // Randomize start to ensure that all Kroger chain scanners do not execute at the same time
+        sleep(mt_rand(10, 120));
+
         $response = json_decode((string)$this->client->get('timeslots/list', [
             'query' => [
                 'stores' => $store->identifier,
