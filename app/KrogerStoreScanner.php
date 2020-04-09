@@ -23,6 +23,11 @@ class KrogerStoreScanner extends StoreScanner
     public function scan(Collection $stores): ?Collection {
         parent::scan($stores);
 
+        if ($stores->count() <= 0) {
+            return collect();
+        }
+
+        $chain = $stores->first()->chain;
         $stores = $stores->keyBy('identifier');
 
         $response = json_decode((string)$this->client->get('timeslots/list', [
@@ -30,7 +35,7 @@ class KrogerStoreScanner extends StoreScanner
                 'stores' => $stores->keys()->implode(','),
                 'totalStores' => $stores->count(),
                 'fulfillment' => 'CurbSide',
-                'banner' => $this->getBanner($stores->first()->chain->name)
+                'banner' => $this->getBanner($chain->name)
             ],
             'headers' => [
                 'accept' => 'application/json, text/plain, */*',
