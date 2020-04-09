@@ -42,9 +42,10 @@ class ScanChain implements ShouldQueue
     {
         $this->chain = $chain;
 
-        $this->scannerRun = new ScannerRun();
-        $this->scannerRun->status = 'ENQUEUED';
-        $chain->scannerRuns()->save($this->scannerRun);
+        $this->scannerRun = ScannerRun::create([
+            'status' => 'ENQUEUED',
+            'chain_id' => $this->chain->id;
+        ]);
     }
 
     /**
