@@ -20,7 +20,7 @@ abstract class StoreScanner
             'timeout' => 15,
             'cookies' => true,
             'headers' => [
-                'User-Agent' => 'Curb Run/1.0'
+                'User-Agent' => 'Curb Run/1.1 (https://curb.run)'
             ],
             'verify' => $this->enableSSLVerification
         ]);
@@ -30,14 +30,14 @@ abstract class StoreScanner
         // Can optionally be implemented by subclasses
     }
 
-    public function scan(Store $store): ?Collection {
+    public function scan(Collection $stores): ?Collection {
         if (!$this->sessionEstablished) {
             $this->prepareSession();
             $this->sessionEstablished = true;
         }
 
-        // To reduce server load for store websites
-        sleep(1);
+        // To reduce server load for store websites, wait 500ms between requests
+        usleep(500000);
 
         return null;
     }

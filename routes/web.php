@@ -21,5 +21,7 @@ Route::get('stores', function () {
     return view('stores');
 });
 
+Route::get('status', 'StatusController');
+
 Route::post('subscribe', 'SubscriberController');
 Route::post('webhook', 'TwilioWebhookController');

@@ -15,4 +15,22 @@ class ScannerRun extends Model
         'timeslots_found',
         'error_message',
     ];
+
+    public function getStatusColorAttribute() {
+        switch ($this->attributes['status']) {
+            case 'ENQUEUED':
+                return 'yellow';
+
+            case 'STARTED':
+                return 'orange';
+
+            case 'SUCCEEDED':
+                return 'green';
+
+            case 'FAILED':
+                return 'red';
+        }
+
+        return 'gray';
+    }
 }

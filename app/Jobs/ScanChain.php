@@ -96,7 +96,7 @@ class ScanChain implements ShouldQueue
 
             $this->scannerRun->update([
                 'status' => 'FAILED',
-                'error_message' => $e->getMessage(),
+                'error_message' => $e->getMessage() . PHP_EOL . $e->getTraceAsString(),
                 'duration_seconds' => time() - $startTime
             ]);
         } finally {
@@ -117,12 +117,7 @@ class ScanChain implements ShouldQueue
 
         info('Scanning for timeslots at ' . $stores->count() . ' ' . $this->chain->name . ' stores');
 
-        $timeslots = $stores->flatMap(function (Store $store) use ($storeScanner) {
-            $timeslots = $storeScanner->scan($store);
-            info($timeslots->count() . ' timeslot(s) found for ' . $store->chain->name . ' ' . $store->name);
-
-            return $timeslots;
-        });
+        $timeslots = $storeScanner->scan($stores);
         $this->timeslotsCount = $timeslots->count();
 
         $subscribers = Subscriber::active()

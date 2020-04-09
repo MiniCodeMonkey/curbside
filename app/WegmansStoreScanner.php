@@ -42,28 +42,31 @@ class WegmansStoreScanner extends StoreScanner
         }
     }
 
-    public function scan(Store $store): ?Collection {
-        parent::scan($store);
-        $this->changeStore($store);
+    public function scan(Collection $stores): ?Collection {
+        parent::scan($stores);
 
-        $cart = json_decode((string)$this->client->get('cart')->getBody());
+        return $stores->flatMap(function (Store $store) {
+            $this->changeStore($store);
 
-        $response = json_decode((string)$this->client->get('timeslots', ['query' => [
-            'above_threshold' => true,
-            'cart_id' => $cart->id,
-            'fulfillment_type' => 'pickup',
-            'user_timezone' => 'America%2FNew_York'
-        ]])->getBody());
+            $cart = json_decode((string)$this->client->get('cart')->getBody());
 
-        $timeslots = collect($response->items)->map(function ($item) use ($store) {
-            return Timeslot::updateOrCreate([
-                'store_id' => $store->id,
-                'date' => Carbon::parse($item->fulfillment_date)->format('Y-m-d'),
-                'from' => $item->timeslot->from_time,
-                'to' => $item->timeslot->to_time
-            ]);
+            $response = json_decode((string)$this->client->get('timeslots', ['query' => [
+                'above_threshold' => true,
+                'cart_id' => $cart->id,
+                'fulfillment_type' => 'pickup',
+                'user_timezone' => 'America%2FNew_York'
+            ]])->getBody());
+
+            $timeslots = collect($response->items)->map(function ($item) use ($store) {
+                return Timeslot::updateOrCreate([
+                    'store_id' => $store->id,
+                    'date' => Carbon::parse($item->fulfillment_date)->format('Y-m-d'),
+                    'from' => $item->timeslot->from_time,
+                    'to' => $item->timeslot->to_time
+                ]);
+            });
+
+            return $timeslots;
         });
-
-        return $timeslots;
     }
 }

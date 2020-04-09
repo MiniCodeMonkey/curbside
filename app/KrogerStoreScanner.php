@@ -12,21 +12,25 @@ class KrogerStoreScanner extends StoreScanner
     protected $baseUri = 'https://www.kroger.com/fulfillment/api/v1/';
 
     protected function prepareSession() {
-        // Randomize start to ensure that all Kroger chain scanners do not execute at the same time
-        $sleepDuration = mt_rand(10, 120);
-        info('[Kroger] Waiting ' . $sleepDuration . ' seconds');
-        sleep($sleepDuration);
+        if (!app()->environment('production')) {
+            // Randomize start to ensure that all Kroger chain scanners do not execute at the same time
+            $sleepDuration = mt_rand(10, 120);
+            info('[Kroger] Waiting ' . $sleepDuration . ' seconds');
+            sleep($sleepDuration);
+        }
     }
 
-    public function scan(Store $store): ?Collection {
-        parent::scan($store);
+    public function scan(Collection $stores): ?Collection {
+        parent::scan($stores);
+
+        $stores = $stores->keyBy('identifier');
 
         $response = json_decode((string)$this->client->get('timeslots/list', [
             'query' => [
-                'stores' => $store->identifier,
-                'totalStores' => 1,
+                'stores' => $stores->keys()->implode(','),
+                'totalStores' => $stores->count(),
                 'fulfillment' => 'CurbSide',
-                'banner' => $this->getBanner($store->chain->name)
+                'banner' => $this->getBanner($stores->first()->chain->name)
             ],
             'headers' => [
                 'accept' => 'application/json, text/plain, */*',
@@ -38,14 +42,14 @@ class KrogerStoreScanner extends StoreScanner
             ]
         ])->getBody());
 
-        $timeslots = collect($response->timeSlots)->flatMap(function ($date) use ($store) {
-            return collect($date->times)->map(function ($item) use ($date, $store) {
+        $timeslots = collect($response->timeSlots)->flatMap(function ($date) use ($stores) {
+            return collect($date->times)->map(function ($item) use ($date, $stores) {
                 if (!$item->available) {
                     return null;
                 }
 
                 return Timeslot::updateOrCreate([
-                    'store_id' => $store->id,
+                    'store_id' => $stores->get($item->storeId)->id,
                     'date' => $date->pickupDate,
                     'from' => $item->pickupBeginTime,
                     'to' => Carbon::parse($item->pickupBeginTime)->addHour()->format('H:i')

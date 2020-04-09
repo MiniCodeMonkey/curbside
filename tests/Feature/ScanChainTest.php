@@ -14,6 +14,6 @@ class ScanChainTest extends TestCase
         $scanChain = new ScanChain($chain);
         $scanChain->handle();
 
-        $this->assertEquals('SUCCEEDED', $scanChain->scannerRun->status);
+        $this->assertEquals('SUCCEEDED', $scanChain->scannerRun->status, $scanChain->scannerRun->error_message ?? 'Unknown error');
     }
 }

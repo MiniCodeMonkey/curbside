@@ -10,10 +10,10 @@ class StoreScannerTest extends TestCase
     public function testGetPickupSlots()
     {
         Chain::orderBy('created_at', 'DESC')->get()->each(function (Chain $chain) {
-            $store = $chain->stores()->first();
+            $stores = $chain->stores()->take(5)->get();
             $storeScanner = $chain->getStoreScanner();
 
-            $slots = $storeScanner->scan($store);
+            $slots = $storeScanner->scan($stores);
             $this->assertNotNull($slots);
         });
     }
