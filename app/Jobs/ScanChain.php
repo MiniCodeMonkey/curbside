@@ -3,6 +3,7 @@
 namespace App\Jobs;
 
 use Throwable;
+use RuntimeException;
 use Bugsnag\BugsnagLaravel\Facades\Bugsnag;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -44,7 +45,7 @@ class ScanChain implements ShouldQueue
 
         $this->scannerRun = ScannerRun::create([
             'status' => 'ENQUEUED',
-            'chain_id' => $this->chain->id;
+            'chain_id' => $this->chain->id
         ]);
     }
 
@@ -75,7 +76,7 @@ class ScanChain implements ShouldQueue
                 if ($lock->get()) {
                     $this->scan();
                 } else {
-                    info('Could not get lock for ' . __CLASS__ . ': ' . $this->chain->name);
+                    throw new RuntimeException('Could not get lock for ' . __CLASS__ . ': ' . $this->chain->name);
                 }
             }
 
