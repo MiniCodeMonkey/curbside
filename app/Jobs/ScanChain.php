@@ -17,6 +17,7 @@ use App\Chain;
 use App\Subscriber;
 use App\Store;
 use App\Timeslot;
+use App\ScannerRun;
 use Carbon\Carbon;
 
 class ScanChain implements ShouldQueue
@@ -27,6 +28,11 @@ class ScanChain implements ShouldQueue
 
     private $chain;
 
+    public $scannerRun;
+
+    private $storesCount = 0;
+    private $timeslotsCount = 0;
+
     /**
      * Create a new job instance.
      *
@@ -35,6 +41,10 @@ class ScanChain implements ShouldQueue
     public function __construct(Chain $chain)
     {
         $this->chain = $chain;
+
+        $this->scannerRun = new ScannerRun();
+        $this->scannerRun->status = 'ENQUEUED';
+        $chain->scannerRuns()->save($this->scannerRun);
     }
 
     /**
@@ -44,25 +54,47 @@ class ScanChain implements ShouldQueue
      */
     public function handle()
     {
-        $cache = cache();
+        $lock = null;
+        $startTime = time();
 
-        if (app()->environment('local')) {
-            info('Warning: Not acquiring lock for ' . __CLASS__);
-            $this->scan();
-        } else {
-            $lock = $cache->lock(__CLASS__ . $this->chain->id, self::LOCK_DURATION_SECONDS);
+        try {
+            $cache = cache();
 
-            if ($lock->get()) {
-                try {
-                    $this->scan();
-                } catch (Throwable $e) {
-                    Bugsnag::notifyException($e);
-                } finally {
-                    $lock->release();
-                }
+            $this->scannerRun->update([
+                'status' => 'STARTED',
+                'hostname' => gethostname()
+            ]);
+
+            if (app()->environment('local')) {
+                info('Warning: Not acquiring lock for ' . __CLASS__);
+                $this->scan();
             } else {
-                info('Could not get lock for ' . __CLASS__ . ': ' . $this->chain->name);
+                $lock = $cache->lock(__CLASS__ . $this->chain->id, self::LOCK_DURATION_SECONDS);
+
+                if ($lock->get()) {
+                    $this->scan();
+                } else {
+                    info('Could not get lock for ' . __CLASS__ . ': ' . $this->chain->name);
+                }
             }
+
+            $this->scannerRun->update([
+                'status' => 'SUCCEEDED',
+                'duration_seconds' => time() - $startTime,
+                'stores_scanned' => $this->storesCount,
+                'timeslots_found' => $this->timeslotsCount,
+            ]);
+
+        } catch (Throwable $e) {
+            Bugsnag::notifyException($e);
+
+            $this->scannerRun->update([
+                'status' => 'FAILED',
+                'error_message' => $e->getMessage(),
+                'duration_seconds' => time() - $startTime
+            ]);
+        } finally {
+            optional($lock)->release();
         }
     }
 
@@ -75,24 +107,21 @@ class ScanChain implements ShouldQueue
                 $query->where('status', 'ACTIVE');
             })
             ->get();
+        $this->storesCount = $stores->count();
 
         info('Scanning for timeslots at ' . $stores->count() . ' ' . $this->chain->name . ' stores');
 
-        $before = microtime(true);
         $timeslots = $stores->flatMap(function (Store $store) use ($storeScanner) {
             $timeslots = $storeScanner->scan($store);
             info($timeslots->count() . ' timeslot(s) found for ' . $store->chain->name . ' ' . $store->name);
 
             return $timeslots;
         });
-        $after = microtime(true);
-        info('Completed ' . $this->chain->name . ' scan in ' . round(($after - $before) / 60) . ' minute(s) with a total of ' . $timeslots->count() . ' timeslot(s) found.');
+        $this->timeslotsCount = $timeslots->count();
 
         $subscribers = Subscriber::active()
             ->with('stores')
             ->get();
-
-        info('Looking through ' . $subscribers->count() . ' subscribers');
 
         $subscribers->each(function (Subscriber $subscriber) use ($timeslots) {
             $this->matchToTimeslots($subscriber, $timeslots);

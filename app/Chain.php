@@ -15,6 +15,10 @@ class Chain extends Model
         return $this->hasMany(Store::class);
     }
 
+    public function scannerRuns() {
+        return $this->hasMany(ScannerRun::class);
+    }
+
     public function getStoreScanner(): ?StoreScanner {
         $providers = [
             'https://www.wegmans.com' => WegmansStoreScanner::class,
