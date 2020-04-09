@@ -57,21 +57,25 @@ class ScanChain implements ShouldQueue
     public function handle()
     {
         $lock = null;
-        $startTime = time();
 
         try {
-            $cache = cache();
-
             $this->scannerRun->update([
                 'status' => 'STARTED',
                 'hostname' => gethostname()
             ]);
 
+            $startTime = time();
+
+            $cache = cache();
+
             if (app()->environment('local')) {
                 info('Warning: Not acquiring lock for ' . __CLASS__);
                 $this->scan();
             } else {
-                $lock = $cache->lock(__CLASS__ . $this->chain->id, self::LOCK_DURATION_SECONDS);
+                $lock = $cache->lock(
+                    __CLASS__ . $this->chain->id,
+                    self::LOCK_DURATION_SECONDS
+                );
 
                 if ($lock->get()) {
                     $this->scan();
