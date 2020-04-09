@@ -29,7 +29,7 @@ abstract class StoreScanner
             }
 
             if ($exception instanceof ConnectException) {
-                info('Retrying due to ConnectException');
+                info('Retrying due to ConnectException: ' . $exception->getMessage());
                 return true;
             }
 

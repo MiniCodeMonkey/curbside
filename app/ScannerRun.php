@@ -3,6 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Str;
 
 class ScannerRun extends Model
 {
@@ -28,7 +29,7 @@ class ScannerRun extends Model
                 return 'green';
 
             case 'FAILED':
-                return 'red';
+                return Str::startsWith($this->error_message, 'Could not get lock') ? 'blue' : 'red';
         }
 
         return 'gray';
