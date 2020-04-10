@@ -16,5 +16,6 @@ class DatabaseSeeder extends Seeder
         $this->call(KrogerStoreSeeder::class);
         $this->call(HEBStoreSeeder::class);
         $this->call(PriceChopperStoreSeeder::class);
+        $this->call(FoodLionStoreSeeder::class);
     }
 }
