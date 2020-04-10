@@ -19,6 +19,10 @@ class Chain extends Model
         return $this->hasMany(ScannerRun::class);
     }
 
+    public function scopeEnabled($query) {
+        return $query->where('enabled', true);
+    }
+
     public function getStoreScanner(): ?StoreScanner {
         $providers = [
             'https://www.wegmans.com' => WegmansStoreScanner::class,
@@ -36,4 +40,6 @@ class Chain extends Model
 
         return null;
     }
+
+
 }

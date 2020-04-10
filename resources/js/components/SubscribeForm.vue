@@ -104,6 +104,9 @@
     props: {
       errorMessage: {
         type: String
+      },
+      availableChains: {
+        type: Array
       }
     },
     data() {
@@ -112,27 +115,6 @@
         chains: ['Wegmans'],
         phone: '',
         criteria: 'ANYTIME',
-        availableChains: [
-          "Wegmans",
-          "Harris Teeter",
-          "H-E-B",
-          "Price Chopper",
-          "Kroger",
-          "City Market",
-          "Copps",
-          "Dillons",
-          "Fred Meyer",
-          "Fry's",
-          "Gerbes",
-          "JayC Foods Stores",
-          "King Soopers",
-          "Metro Market",
-          "Owen's Market",
-          "Pick 'n Save",
-          "QFC",
-          "Ralphs",
-          "Smith's",
-        ]
       };
     },
     methods: {

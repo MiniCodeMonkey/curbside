@@ -4,7 +4,7 @@
 
 <div class="m-4 flex flex-wrap">
   @foreach ($chains as $chain)
-    <div class="mb-4 mr-4">
+    <div class="mb-4 mr-4{{ $chain->enabled ? '' : ' opacity-50' }}">
       <h2 class="font-bold text-xl mb-2">{{ $chain->name }}</h2>
 
       <div class="mb-6 grid grid-cols-3 gap-0.5 lg:mb-8">

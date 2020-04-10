@@ -14,7 +14,11 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('landing');
+    $chains = App\Chain::enabled()
+        ->orderBy('created_at', 'ASC')
+        ->get();
+
+    return view('landing', ['chains' => $chains]);
 });
 
 Route::get('stores', function () {

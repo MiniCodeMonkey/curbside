@@ -50,11 +50,16 @@
   </div>
 
   <location-modal v-if="loading || errorMessage" :errorMessage="errorMessage" @retry="launch"></location-modal>
-  <notification-subscription-modal v-if="location" :location="location" @dismiss="handleDismiss"></notification-subscription-modal>
+  <notification-subscription-modal v-if="location" :location="location" :chains="chains" @dismiss="handleDismiss"></notification-subscription-modal>
 </div>
 </template>
 <script>
   export default {
+    props: {
+      chains: {
+        type: Array
+      }
+    },
     data() {
       return {
         location: null,

@@ -13,7 +13,9 @@ class StatusController extends Controller
         $chains = Chain::with(['scannerRuns' => function ($query) {
             $query->where('created_at', '>=', now()->subMinutes(15))
                    ->orderBy('created_at', 'ASC');
-        }])->get();
+        }])
+        ->orderBy('enabled', 'DESC')
+        ->get();
 
         return view('status', ['chains' => $chains]);
     }

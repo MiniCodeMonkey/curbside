@@ -12,7 +12,7 @@
   </div>
 </div>
 
-<landing></landing>
+<landing :chains='@json($chains->map->name)'></landing>
 
 @include('partials.howitworks')
 @include('partials.logos')
