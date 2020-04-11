@@ -13,6 +13,8 @@ class StoreScannerTest extends TestCase
             $stores = $chain->stores()->take(2)->get();
             $storeScanner = $chain->getStoreScanner();
 
+            $this->assertNotNull($storeScanner, 'StoreScanner class should not be null for ' . $chain->name);
+
             $slots = $storeScanner->scan($stores);
             $this->assertNotNull($slots);
         });
