@@ -83,6 +83,10 @@
           }, err => {
             this.loading = false;
             this.handleError(err);
+          }, {
+            enableHighAccuracy: false,
+            timeout: 30000,
+            maximumAge: Infinity
           });
         } else {
           this.errorMessage = 'Your browser does not appear to support geolocation. Please try another browser.';
@@ -104,7 +108,7 @@
             break;
 
           case 3:
-            this.errorMessage = 'It took to longer to find your location. Please try again later or use a different browser.';
+            this.errorMessage = 'It took too long to find your location. Please try again later or use a different browser.';
             break;
 
           default:
