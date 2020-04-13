@@ -2,7 +2,7 @@
 
 @section('content')
 
-@include('partials.announcement')
+@includeWhen(false, 'partials.announcement')
 
 <landing :chains='@json($chains->map->name)'></landing>
 
