@@ -84,9 +84,7 @@
             this.loading = false;
             this.handleError(err);
           }, {
-            enableHighAccuracy: false,
-            timeout: 30000,
-            maximumAge: Infinity
+            enableHighAccuracy: false
           });
         } else {
           this.errorMessage = 'Your browser does not appear to support geolocation. Please try another browser.';
