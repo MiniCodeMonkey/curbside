@@ -52,7 +52,7 @@ class ScanStoresCommand extends Command
             dispatch(new ScanChain($chain));
         } else {
             // Scan chains in parallel
-            Chain::enabled()->get()->each(function (Chain $chain) {
+            Chain::where('autoscan', true)->get()->each(function (Chain $chain) {
                 dispatch(new ScanChain($chain));
             });
         }
