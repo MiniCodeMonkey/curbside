@@ -3,6 +3,7 @@
 namespace App;
 
 use RuntimeException;
+use GuzzleHttp\Exception\ClientException;
 use Illuminate\Support\Collection;
 use Carbon\Carbon;
 use App\Store;
@@ -64,7 +65,12 @@ class WeisMarketsStoreScanner extends StoreScanner
         parent::scan($stores);
 
         return $stores->flatMap(function (Store $store) {
-            $this->changeStore($store);
+            try {
+                $this->changeStore($store);
+            } catch (ClientException $e) {
+                // I.e. "Location does not support the attribute: pickup"
+                return null;
+            }
 
             $json = json_decode((string)$this->client->post('m_order/' . $this->orderId . '/getduetimes', [
                 'json' => [
