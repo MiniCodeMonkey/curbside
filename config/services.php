@@ -38,6 +38,10 @@ return [
         'from' => env('TWILIO_FROM_NUMBER'),
     ],
 
+    'geocodio' => [
+        'api_key' => env('GECODOIO_API_KEY'),
+    ],
+
     'harristeeter' => [
         'email' => env('HARRISTEETER_EMAIL'),
         'password' => env('HARRISTEETER_PASSWORD'),

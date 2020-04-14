@@ -4,50 +4,13 @@ use Illuminate\Database\Seeder;
 use Grimzy\LaravelMysqlSpatial\Types\Point;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\ClientException;
+use App\SeedLocations;
 use App\Chain;
 use App\Store;
 
 class HEBStoreSeeder extends Seeder
 {
-    // Thank you alltheplaces <3
-    const LOCATION_SEED_FILE_URL = 'https://raw.githubusercontent.com/alltheplaces/alltheplaces/master/locations/searchable_points/us_centroids_25mile_radius_state.csv';
-
-    private $locationSeed = [];
-
-    /**
-     * Run the database seeds.
-     *
-     * @return void
-     */
-    public function run()
-    {
-        $this->ensureLocationSeedFile();
-        $this->seed();
-    }
-
-    private function ensureLocationSeedFile() {
-        $locationSeedFilename = storage_path('searchable_points_25.csv');
-
-        if (!file_exists($locationSeedFilename)) {
-            file_put_contents($locationSeedFilename, file_get_contents(self::LOCATION_SEED_FILE_URL));
-        }
-
-        if (($handle = fopen($locationSeedFilename, 'r')) !== FALSE) {
-            $lineNo = 1;
-            while (($row = fgetcsv($handle, 1000, ',')) !== FALSE) {
-                if ($lineNo > 1 && $row[3] === 'TX') {
-                    $this->locationSeed[] = [
-                        $latitude = $row[1],
-                        $longitude = $row[2]
-                    ];
-                }
-                $lineNo++;
-            }
-            fclose($handle);
-        }
-    }
-
-    private function seed() {
+    public function run() {
         if (Chain::where('name', 'H-E-B')->first()) {
             return;
         }
@@ -64,9 +27,11 @@ class HEBStoreSeeder extends Seeder
 
         $savedStoreIds = [];
 
-        foreach ($this->locationSeed as $index => $location) {
+        $seedLocations = SeedLocations::byState('TX');
+
+        foreach ($seedLocations as $index => $location) {
             if ($index % 10 === 0) {
-                echo round($index / count($this->locationSeed) * 100) . '%' . PHP_EOL;
+                echo round($index / count($seedLocations) * 100) . '%' . PHP_EOL;
             }
 
             $searchParameters = [
