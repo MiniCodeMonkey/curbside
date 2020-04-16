@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Str;
 use Grimzy\LaravelMysqlSpatial\Types\Point;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\ClientException;
@@ -59,8 +60,14 @@ class AlbertsonsStoreSeeder extends Seeder
                 if (!in_array($item->locationId, $savedStoreIds)) {
                     $savedStoreIds[] = $item->locationId;
 
+                    $chainName = $item->storeRewards->storeName;
+
+                    if (Str::startsWith($chainName, 'Abertsons')) {
+                        $chainName = 'Abertsons';
+                    }
+
                     $chain = Chain::firstOrCreate([
-                        'name' => $item->storeRewards->storeName,
+                        'name' => $chainName,
                         'url' => 'https://www.albertsons.com'
                     ]);
 

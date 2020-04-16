@@ -27,4 +27,16 @@ class Store extends Model
     public function timeslots() {
         return $this->hasMany(Timeslot::class);
     }
+
+    public function getNameAttribute() {
+        if ($this->attributes['name'] == $this->chain->name) {
+            return implode(' ', [
+                $this->street,
+                $this->city,
+                $this->state
+            ]);
+        }
+
+        return $this->attributes['name'];
+    }
 }

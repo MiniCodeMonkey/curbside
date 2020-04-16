@@ -80,7 +80,9 @@ class ScanChain implements ShouldQueue
                 if ($lock->get()) {
                     $this->scan();
                 } else {
-                    throw new RuntimeException('Could not get lock for ' . __CLASS__ . ': ' . $this->chain->name);
+                    throw new RuntimeException(
+                        'Could not get lock for ' . __CLASS__ . ': ' . $this->chain->name
+                    );
                 }
             }
 
@@ -94,11 +96,19 @@ class ScanChain implements ShouldQueue
         } catch (Throwable $e) {
             Bugsnag::notifyException($e);
 
+            $trace = $e->getTraceAsString();
+
             $this->scannerRun->update([
                 'status' => 'FAILED',
-                'error_message' => $e->getMessage() . PHP_EOL . $e->getTraceAsString(),
+                'error_message' => $e->getMessage() . PHP_EOL . $trace,
                 'duration_seconds' => time() - $startTime
             ]);
+
+            $traceLines = collect(explode(PHP_EOL, $trace));
+            info(implode(PHP_EOL, [
+                __CLASS__. ': ' . $e->getMessage(),
+                $traceLines->take(5)->implode(PHP_EOL)
+            ]));
         } finally {
             optional($lock)->release();
         }

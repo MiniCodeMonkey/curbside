@@ -29,13 +29,21 @@ abstract class StoreScanner
             }
 
             if ($exception instanceof ConnectException) {
-                info('Retrying due to ConnectException: ' . $exception->getMessage());
+                info(
+                    'Retrying ' . $request->getUri() . ' due to ConnectException: '
+                    . $exception->getMessage()
+                );
+
                 return true;
             }
 
             if ($response) {
                 if ($response->getStatusCode() >= 500) {
-                    info('Retrying due to status code ' . $response->getStatusCode());
+                    info(
+                        'Retrying ' . $request->getUri() . ' due to status code '
+                        . $response->getStatusCode()
+                    );
+
                     return true;
                 }
             }

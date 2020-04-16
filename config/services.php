@@ -45,6 +45,11 @@ return [
     'harristeeter' => [
         'email' => env('HARRISTEETER_EMAIL'),
         'password' => env('HARRISTEETER_PASSWORD'),
-    ]
+    ],
+
+    'albertsons' => [
+        'email' => env('ALBERTSONS_EMAIL'),
+        'password' => env('ALBERTSONS_PASSWORD'),
+    ],
 
 ];
