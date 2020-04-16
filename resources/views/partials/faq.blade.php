@@ -26,6 +26,26 @@
               </p>
             </dd>
           </div>
+          <div class="mt-12">
+            <dt class="text-lg leading-6 font-medium text-gray-900">
+              How do I change my notification settings?
+            </dt>
+            <dd class="mt-2">
+              <p class="text-base leading-6 text-gray-500">
+                All you will need to do is sign up again on this page. Your previous preferences will be replaced with your new notification settings.
+              </p>
+            </dd>
+          </div>
+          <div class="mt-12">
+            <dt class="text-lg leading-6 font-medium text-gray-900">
+              How do I cancel and stop notifications?
+            </dt>
+            <dd class="mt-2">
+              <p class="text-base leading-6 text-gray-500">
+                Simply reply <code>DONE</code> to the text message you received from us. Note that we will only send matching timeslots once after a subscription has been created, you will explicitly need to reply with <code>CONTINUE</code> if you want us to keep looking.
+              </p>
+            </dd>
+          </div>
         </div>
         <div class="mt-12 md:mt-0">
           <div>
@@ -45,6 +65,16 @@
             <dd class="mt-2">
               <p class="text-base leading-6 text-gray-500">
                 No! This is completely free. Curbside pickup is better for public health and this makes it less frustrating. We are happy to cover the limited costs associated with running the service. We do not share your submitted data with anyone; the only organization that gets to see your phone number is our text service provider, <a href="https://www.twilio.com/legal/privacy" target="_blank">Twilio</a>.
+              </p>
+            </dd>
+          </div>
+          <div class="mt-12">
+            <dt class="text-lg leading-6 font-medium text-gray-900">
+              How can I change what phone number to use?
+            </dt>
+            <dd class="mt-2">
+              <p class="text-base leading-6 text-gray-500">
+                Reply to the sign-up text message you received from us with <code>DONE</code>. This will stop the subscription. Now go and sign up for Curb Run notifications again with the new phone number.
               </p>
             </dd>
           </div>
