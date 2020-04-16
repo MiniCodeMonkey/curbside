@@ -78,6 +78,9 @@ class AlbertsonsStoreScanner extends StoreScanner
     }
 
     protected function prepareSession() {
+        // Space out requests since multiple chains use this scanner
+        sleep(mt_rand(5, 30));
+
         $this->oAuthLogin();
         $this->refreshUser();
         $this->getAuthToken();
