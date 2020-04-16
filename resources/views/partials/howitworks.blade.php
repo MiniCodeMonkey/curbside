@@ -47,7 +47,7 @@
           <div class="mt-5">
             <h5 class="text-lg leading-6 font-medium text-gray-900">Wait for text message</h5>
             <p class="mt-2 text-base leading-6 text-gray-500">
-              We'll seend you a text as soon as a slot becomes available. Hurry! Log in to your grocery store account and claim your slot.
+              We'll send you a text as soon as a slot becomes available. Hurry! Log in to your grocery store account and claim your slot.
             </p>
           </div>
         </div>
