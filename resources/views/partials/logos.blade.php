@@ -5,7 +5,7 @@
     </p>
     <div class="mt-6 grid grid-cols-6 gap-0.5 lg:mt-8">
       @foreach ($chains as $chain)
-      <div class="col-span-1 flex justify-center py-8 px-8 bg-gray-50">
+      <div class="{{ $chain->name === 'Carrs' ? 'col-span-2' : 'col-span-1'}} flex justify-center py-8 px-8 bg-gray-50">
         <img class="max-h-12" src="{{ asset('img/logos/' . $chain->logo_filename) }}" alt="{{ $chain->name }}" />
       </div>
       @endforeach
