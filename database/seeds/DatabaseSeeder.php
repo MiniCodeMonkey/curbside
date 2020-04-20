@@ -19,5 +19,6 @@ class DatabaseSeeder extends Seeder
         $this->call(FoodLionStoreSeeder::class);
         $this->call(WeisMarketsStoreSeeder::class);
         $this->call(AlbertsonsStoreSeeder::class);
+        $this->call(GiantEagleStoreSeeder::class);
     }
 }
