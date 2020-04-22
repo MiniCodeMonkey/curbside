@@ -1,5 +1,5 @@
 <template>
-  <form class="bg-white rounded-lg px-4 pt-5 pb-4 overflow-hidden shadow-xl transform sm:max-w-sm sm:w-full sm:p-6">
+  <form class="bg-white px-4 pt-5 pb-4 sm:p-6">
     <div>
       <div class="mx-auto flex items-center justify-center h-12 w-12 rounded-full bg-green-100">
         <svg class="h-6 w-6 text-green-600" stroke="currentColor" fill="none" viewBox="0 0 24 24">
@@ -25,12 +25,14 @@
 
     <div class="mt-3">
       <label for="radius" class="block text-sm font-medium leading-5 text-gray-700">How far are you willing to travel?</label>
-      <div class="mt-1 relative rounded-md shadow-sm">
-        <input id="radius" v-model="radius" class="form-input block w-full pr-16 sm:pr-14 sm:text-sm sm:leading-5" pattern="\d*" required />
-        <div class="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
-          <span class="text-gray-500 sm:text-sm sm:leading-5">
-            miles
-          </span>
+      <div class="flex items-center mt-1">
+        <input class="form-range flex-grow" type="range" min="1" max="300" step="1" id="radius" v-model="radius" />
+
+        <div class="flex sm:text-sm sm:leading-5 ml-2">
+          <div class="w-8">{{ radius }}</div>
+          <div class="w-6">
+            {{ radius == 1 ? 'mile' : 'miles' }}
+          </div>
         </div>
       </div>
       <p class="mt-2 text-sm text-gray-500">We will only look at stores within this radius.</p>
@@ -39,7 +41,7 @@
     <div class="mt-4">
       <label for="chains" class="block text-sm font-medium leading-5 text-gray-700">Which stores do you want to monitor?</label>
 
-      <div>
+      <div class="grid grid-cols-2 gap-0.5">
         <div v-for="(chainName, index) in availableChains" class="mt-3 relative flex items-start">
           <div class="absolute flex items-center h-5">
             <input name="chains" v-model="chains" :value="chainName" :id="'store_' + index" type="checkbox" class="form-checkbox h-4 w-4 text-orange-600 transition duration-150 ease-in-out">

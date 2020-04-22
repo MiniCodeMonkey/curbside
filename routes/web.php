@@ -21,6 +21,14 @@ Route::get('/', function () {
     return view('landing', ['chains' => $chains]);
 });
 
+Route::post('/', function () {
+    $chains = App\Chain::enabled()
+        ->orderBy('created_at', 'ASC')
+        ->get();
+
+    return view('signup', ['chains' => $chains]);
+});
+
 Route::get('stores', function () {
     return view('stores');
 });
