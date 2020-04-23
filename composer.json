@@ -16,6 +16,8 @@
         "giggsey/libphonenumber-for-php": "^8.12",
         "grimzy/laravel-mysql-spatial": "^2.2",
         "guzzlehttp/guzzle": "^6.3",
+        "jmikola/geojson": "^1.0",
+        "ksubileau/color-thief-php": "^1.4",
         "laravel-notification-channels/twilio": "^2.1",
         "laravel/framework": "^7.0",
         "laravel/tinker": "^2.0",

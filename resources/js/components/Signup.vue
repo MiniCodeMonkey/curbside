@@ -46,7 +46,7 @@
     created() {
       // TODO: Remove me
       setTimeout(() => {
-        this.location = [38.8, -76.9];
+        //this.location = [38.8, -76.9];
       }, 250);
     },
     methods: {
