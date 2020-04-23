@@ -1,7 +1,8 @@
 <template>
   <l-map
-    :zoom="zoom"
-    :center="center"
+    ref="map"
+    :zoom.sync="zoom"
+    :center.sync="center"
     style="height: 100%; width: 100%"
   >
     <l-tile-layer
@@ -9,9 +10,9 @@
       :attribution="attribution"
     />
     <l-circle
-      v-if="location"
+      v-if="showRadius && location"
       :lat-lng="location"
-      :radius="15000"
+      :radius="radiusInMeters"
       color="red"
     />
     <l-geo-json
@@ -39,17 +40,26 @@
     props: {
       location: {
         type: Array
+      },
+      selectedChains: {
+        type: Array
+      },
+      radius: {
+        type: Number
       }
     },
     watch: {
       location: function(newVal, oldVal) {
         if (newVal !== null) {
-          this.center = this.location;
+          this.$refs.map.mapObject.flyTo(latLng(this.location), 9, {
+            animate: true,
+            duration: 0.5
+          });
 
-          // See https://github.com/vue-leaflet/Vue2Leaflet/issues/170
+          // Show radius circle after animation is complete
           setTimeout(() => {
-            this.zoom = 10;
-          }, 1000);
+            this.showRadius = true;
+          }, 500);
         }
       }
     },
@@ -58,6 +68,7 @@
         zoom: 4,
         center: [31.34, -99.32],
         loading: false,
+        showRadius: false,
         show: true,
         enableTooltip: true,
         geojson: null,
@@ -69,6 +80,9 @@
       };
     },
     computed: {
+      radiusInMeters() {
+        return this.radius * 1609.34;
+      },
       options() {
         return {
           onEachFeature: this.onEachFeatureFunction

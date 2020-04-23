@@ -26,7 +26,7 @@
     <div class="mt-3">
       <label for="radius" class="block text-sm font-medium leading-5 text-gray-700">How far are you willing to travel?</label>
       <div class="flex items-center mt-1">
-        <input class="form-range flex-grow" type="range" min="1" max="300" step="1" id="radius" v-model="radius" />
+        <input class="form-range flex-grow" type="range" min="1" max="300" step="1" id="radius" v-model="inputRadius" />
 
         <div class="flex sm:text-sm sm:leading-5 ml-2">
           <div class="w-8">{{ radius }}</div>
@@ -39,12 +39,12 @@
     </div>
 
     <div class="mt-4">
-      <label for="chains" class="block text-sm font-medium leading-5 text-gray-700">Which stores do you want to monitor?</label>
+      <label for="selectedChains" class="block text-sm font-medium leading-5 text-gray-700">Which stores do you want to monitor?</label>
 
       <div class="grid grid-cols-2 gap-0.5">
         <div v-for="(chainName, index) in availableChains" class="mt-3 relative flex items-start">
           <div class="absolute flex items-center h-5">
-            <input name="chains" v-model="chains" :value="chainName" :id="'store_' + index" type="checkbox" class="form-checkbox h-4 w-4 text-orange-600 transition duration-150 ease-in-out">
+            <input name="selectedChains" v-model="inputSelectedChains" :value="chainName" :id="'store_' + index" type="checkbox" class="form-checkbox h-4 w-4 text-orange-600 transition duration-150 ease-in-out">
           </div>
           <div class="pl-7 text-sm leading-5">
             <label :for="'store_' + index" class="font-medium text-gray-700">{{ chainName }}</label>
@@ -61,7 +61,7 @@
             <option>US</option>
           </select>
         </div>
-        <input id="phone" v-model="phone" class="form-input block w-full pl-16 sm:text-sm sm:leading-5" placeholder="(555) 987-6543" required />
+        <input id="phone" v-model="inputPhone" class="form-input block w-full pl-16 sm:text-sm sm:leading-5" placeholder="(555) 987-6543" required />
       </div>
 
       <p class="mt-2 text-sm text-gray-500">The phone number will only be used for notifications.</p>
@@ -72,19 +72,19 @@
 
       <div>
         <div class="mt-2 flex items-center">
-          <input id="criteria_anytime" v-model="criteria" name="form-input criteria_notifications" value="ANYTIME" type="radio" class="form-radio h-4 w-4 text-orange-600 transition duration-150 ease-in-out" checked>
+          <input id="criteria_anytime" v-model="inputCriteria" name="form-input criteria_notifications" value="ANYTIME" type="radio" class="form-radio h-4 w-4 text-orange-600 transition duration-150 ease-in-out" checked>
           <label for="criteria_anytime" class="ml-3">
             <span class="block text-sm leading-5 font-medium text-gray-700">Slot is available at any time</span>
           </label>
         </div>
         <div class="mt-3 flex items-center">
-          <input id="criteria_soon" v-model="criteria" name="form-input criteria_notifications" value="SOON" type="radio" class="form-radio h-4 w-4 text-orange-600 transition duration-150 ease-in-out">
+          <input id="criteria_soon" v-model="inputCriteria" name="form-input criteria_notifications" value="SOON" type="radio" class="form-radio h-4 w-4 text-orange-600 transition duration-150 ease-in-out">
           <label for="criteria_soon" class="ml-3">
             <span class="block text-sm leading-5 font-medium text-gray-700">Slot is available within the next 3 days</span>
           </label>
         </div>
         <div class="mt-3 flex items-center">
-          <input id="criteria_today" v-model="criteria" name="form-input criteria_notifications" value="TODAY" type="radio" class="form-radio h-4 w-4 text-orange-600 transition duration-150 ease-in-out">
+          <input id="criteria_today" v-model="inputCriteria" name="form-input criteria_notifications" value="TODAY" type="radio" class="form-radio h-4 w-4 text-orange-600 transition duration-150 ease-in-out">
           <label for="criteria_today" class="ml-3">
             <span class="block text-sm leading-5 font-medium text-gray-700">Slot is available today</span>
           </label>
@@ -109,19 +109,41 @@
       },
       availableChains: {
         type: Array
+      },
+      selectedChains: {
+        type: Array
+      },
+      radius: {
+        type: Number
+      }
+    },
+    computed: {
+      inputSelectedChains: {
+        get() {
+          return this.selectedChains;
+        },
+        set(val) {
+          this.$emit('selectedChainsChanged', val);
+        }
+      },
+      inputRadius: {
+        get() {
+          return this.radius;
+        },
+        set(val) {
+          this.$emit('radiusChanged', Number(val));
+        }
       }
     },
     data() {
       return {
-        radius: 25,
-        chains: ['Wegmans'],
-        phone: '',
-        criteria: 'ANYTIME',
+        inputPhone: '',
+        inputCriteria: 'ANYTIME',
       };
     },
     methods: {
       submit: function () {
-        this.$emit('submit', this.radius, this.chains, this.phone, this.criteria);
+        this.$emit('submit', this.inputRadius, this.inputChains, this.inputPhone, this.inputCriteria);
       }
     }
   }
