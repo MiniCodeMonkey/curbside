@@ -147,7 +147,7 @@
     },
     async created() {
       this.loading = true;
-      const response = await fetch(`${window.__ASSET_URL__}/stores.geojson`);
+      const response = await fetch(`${window.__ASSET_URL__}stores.geojson`);
       const data = await response.json();
       this.geojson = data;
       this.loading = false;
