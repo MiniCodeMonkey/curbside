@@ -4,7 +4,7 @@
     :zoom.sync="zoom"
     :center.sync="center"
     :options="mapOptions"
-    style="height: 100%; width: 100%"
+    class="h-screen"
   >
     <l-tile-layer
       :url="url"
@@ -13,7 +13,7 @@
     <l-geo-json
       v-if="geojson"
       :geojson="geojson"
-      :options="options"
+      :options="markerOptions"
     />
     <l-circle
       v-if="showRadius && location"
@@ -24,7 +24,8 @@
   </l-map>
 </template>
 <script>
-  import LatLon from 'geodesy/latlon-spherical.js';
+  import { uniq } from 'lodash';
+  import latLngGeodesy from 'geodesy/latlon-spherical.js';
   import { latLng, circleMarker, CRS } from 'leaflet';
   import { LMap, LTileLayer, LGeoJson, LCircle } from 'vue2-leaflet';
 
@@ -58,8 +59,37 @@
           // Show radius circle after animation is complete
           setTimeout(() => {
             this.showRadius = true;
+            this.updateInRangeStoreIds();
           }, 500);
         }
+      },
+      radius: function() {
+        this.updateInRangeStoreIds();
+      }
+    },
+    methods: {
+      updateInRangeStoreIds() {
+        const userLocation = this.location && new latLngGeodesy(this.location[0], this.location[1]);
+        const radiusInMeters = this.radiusInMeters;
+
+        if (userLocation && this.geojson) {
+          const inRangeFeatures = this.geojson.features.filter(feature => {
+            const storeLocation = new latLngGeodesy(
+              feature.geometry.coordinates[1],
+              feature.geometry.coordinates[0]
+            );
+
+            return storeLocation.distanceTo(userLocation) <= radiusInMeters;
+          })
+
+          this.inRangeStoreIds = inRangeFeatures.map(feature => feature.id);
+          this.inRangeChains = uniq(inRangeFeatures.map(feature => feature.properties.chain));
+        } else {
+          this.inRangeStoreIds = [];
+          this.inRangeChains = [];
+        }
+
+        this.$emit('inRangeChainsChanged', this.inRangeChains);
       }
     },
     data() {
@@ -72,17 +102,18 @@
         loading: false,
         showRadius: false,
         geojson: null,
-        fillColor: "#e4ce7f",
         url: 'https://tile-cdn.geocod.io/tiles/geocodio/{z}/{x}/{y}.png',
         attribution:
-          '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+          '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors',
+        inRangeStoreIds: [],
+        inRangeChains: []
       };
     },
     computed: {
       radiusInMeters() {
         return this.radius * 1609.34;
       },
-      options() {
+      markerOptions() {
         return {
           onEachFeature: this.onEachFeatureFunction,
           filter: this.geoJsonFilterFunction,
@@ -92,7 +123,8 @@
       pointToLayerFunction() {
         return (feature, latlng) => {
           return circleMarker(latlng, {
-            color: feature.properties.color,//'#3388ff',
+            color: feature.properties.color,
+            fill: true,
             radius: 5
           });
         }
@@ -100,27 +132,17 @@
       onEachFeatureFunction() {
         return (feature, layer) => {
           layer.bindTooltip(
-            feature.properties.name,
+            `${feature.properties.chain} ${feature.properties.name}`,
             { permanent: false, sticky: true }
           );
         };
       },
       geoJsonFilterFunction() {
-        const userLocation = this.location && new LatLon(this.location[0], this.location[1]);
-        const radiusInMeters = this.radiusInMeters;
+        const inRangeStoreIds = this.inRangeStoreIds;
+        const selectedChains = this.selectedChains;
 
-        return feature => {
-          if (!userLocation) {
-            return false;
-          }
-
-          const storeLocation = new LatLon(
-            feature.geometry.coordinates[1],
-            feature.geometry.coordinates[0]
-          );
-
-          return storeLocation.distanceTo(userLocation) <= radiusInMeters;
-        };
+        return feature => selectedChains.includes(feature.properties.chain)
+           && inRangeStoreIds.includes(feature.id)
       }
     },
     async created() {

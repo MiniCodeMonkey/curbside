@@ -1,5 +1,5 @@
 <template>
-  <form class="bg-white px-4 pt-5 pb-4 sm:p-6">
+  <form @submit.prevent="submit" class="bg-white px-4 pt-5 pb-4 sm:p-6">
     <div>
       <div class="mx-auto flex items-center justify-center h-12 w-12 rounded-full bg-green-100">
         <svg class="h-6 w-6 text-green-600" stroke="currentColor" fill="none" viewBox="0 0 24 24">
@@ -28,21 +28,24 @@
       <div class="flex items-center mt-1">
         <input class="form-range flex-grow" type="range" min="1" max="300" step="1" id="radius" v-model="inputRadius" />
 
-        <div class="flex sm:text-sm sm:leading-5 ml-2">
-          <div class="w-8">{{ radius }}</div>
-          <div class="w-6">
+        <div class="flex text-xs sm:text-sm sm:leading-5 ml-2">
+          <div class="w-6 sm:w-8">{{ radius }}</div>
+          <div class="w-4 sm:w-6">
             {{ radius == 1 ? 'mile' : 'miles' }}
           </div>
         </div>
       </div>
-      <p class="mt-2 text-sm text-gray-500">We will only look at stores within this radius.</p>
+      <p class="mt-2 text-sm text-gray-500">
+        We will only look at stores within this radius.
+        <button type="button" @click="resetLocation" class="underline hover:text-gray-700">Change?</button>
+      </p>
     </div>
 
     <div class="mt-4">
       <label for="selectedChains" class="block text-sm font-medium leading-5 text-gray-700">Which stores do you want to monitor?</label>
 
       <div class="grid grid-cols-2 gap-0.5">
-        <div v-for="(chainName, index) in availableChains" class="mt-3 relative flex items-start">
+        <div v-for="(chainName, index) in inRangeChains" class="mt-3 relative flex items-start">
           <div class="absolute flex items-center h-5">
             <input name="selectedChains" v-model="inputSelectedChains" :value="chainName" :id="'store_' + index" type="checkbox" class="form-checkbox h-4 w-4 text-orange-600 transition duration-150 ease-in-out">
           </div>
@@ -50,6 +53,14 @@
             <label :for="'store_' + index" class="font-medium text-gray-700">{{ chainName }}</label>
           </div>
         </div>
+      </div>
+
+      <div v-if="hasLocation && inRangeChains.length < availableChains.length" class="text-gray-500 text-xs mt-2">
+        <strong>Out of range:</strong> {{ outOfRangeChains.join(', ') }}.
+      </div>
+
+      <div v-if="!hasLocation" class="text-gray-500 text-xs mt-2">
+        &mdash;
       </div>
     </div>
 
@@ -94,7 +105,7 @@
 
     <div class="mt-5 sm:mt-6">
       <span class="flex w-full rounded-md shadow-sm">
-        <button @click="submit" type="button" class="inline-flex justify-center w-full rounded-md border border-transparent px-4 py-2 bg-orange-600 text-base leading-6 font-medium text-white shadow-sm hover:bg-orange-500 focus:outline-none focus:border-orange-700 focus:shadow-outline-orange transition ease-in-out duration-150 sm:text-sm sm:leading-5">
+        <button type="submit" class="inline-flex justify-center w-full rounded-md border border-transparent px-4 py-2 bg-orange-600 text-base leading-6 font-medium text-white shadow-sm hover:bg-orange-500 focus:outline-none focus:border-orange-700 focus:shadow-outline-orange transition ease-in-out duration-150 sm:text-sm sm:leading-5">
           Notify me
         </button>
       </span>
@@ -102,6 +113,8 @@
   </form>
 </template>
 <script>
+  import { difference } from 'lodash';
+
   export default {
     props: {
       errorMessage: {
@@ -113,8 +126,14 @@
       selectedChains: {
         type: Array
       },
+      inRangeChains: {
+        type: Array
+      },
       radius: {
         type: Number
+      },
+      hasLocation: {
+        type: Boolean
       }
     },
     computed: {
@@ -133,6 +152,9 @@
         set(val) {
           this.$emit('radiusChanged', Number(val));
         }
+      },
+      outOfRangeChains() {
+        return difference(this.availableChains, this.inRangeChains);
       }
     },
     data() {
@@ -143,7 +165,11 @@
     },
     methods: {
       submit: function () {
-        this.$emit('submit', this.inputRadius, this.inputChains, this.inputPhone, this.inputCriteria);
+        const selectedChains = difference(this.inputSelectedChains, this.outOfRangeChains);
+        this.$emit('submit', this.inputRadius, this.inputSelectedChains, this.inputPhone, this.inputCriteria);
+      },
+      resetLocation: function () {
+        this.$emit('resetLocation');
       }
     }
   }

@@ -1,23 +1,27 @@
 <template>
 <div>
-  <div class="flex flex-row h-screen">
-    <div class="w-1/3">
+  <div class="sm:flex sm:flex-row sm:h-screen">
+    <div class="sm:w-1/3">
       <subscribe-form
         :errorMessage="errorMessage"
         :availableChains="chains"
         :selectedChains="selectedChains"
+        :inRangeChains="inRangeChains"
         :radius="radius"
+        :hasLocation="location !== null"
         @selectedChainsChanged="selectedChains = $event"
         @radiusChanged="radius = $event"
         @submit="handleSubmit"
+        @resetLocation="location = null"
       ></subscribe-form>
     </div>
 
-    <div class="w-2/3">
+    <div class="sm:w-2/3">
       <store-map
         :location="location"
         :selectedChains="selectedChains"
         :radius="radius"
+        @inRangeChainsChanged="inRangeChains = $event"
       ></store-map>
     </div>
   </div>
@@ -40,14 +44,9 @@
 
         location: null,
         radius: 25,
-        selectedChains: []
+        selectedChains: this.chains,
+        inRangeChains: []
       };
-    },
-    created() {
-      // TODO: Remove me
-      setTimeout(() => {
-        //this.location = [38.8, -76.9];
-      }, 250);
     },
     methods: {
       saveLocation(location) {
@@ -56,6 +55,7 @@
       handleSubmit: function (radius, chains, phone, criteria) {
         window.scrollTo(0, 0);
         this.isSaving = true;
+        this.errorMessage = null;
 
         axios.post('subscribe', {
           radius,
