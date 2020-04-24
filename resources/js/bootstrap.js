@@ -1,5 +1,3 @@
-window._ = require('lodash');
-
 /**
  * We'll load the axios HTTP library which allows us to easily issue requests
  * to our Laravel back-end. This library automatically handles sending the
@@ -18,6 +16,8 @@ files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(
 const app = new Vue({
     el: '#app',
 });
+
+import 'leaflet/dist/leaflet.css';
 
 /**
  * Echo exposes an expressive API for subscribing to channels and listening

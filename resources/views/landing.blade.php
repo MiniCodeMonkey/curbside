@@ -4,8 +4,7 @@
 
 @includeWhen(false, 'partials.announcement')
 
-<landing :chains='@json($chains->map->name)'></landing>
-
+@include('partials.landing')
 @include('partials.howitworks')
 @include('partials.logos')
 @include('partials.about')

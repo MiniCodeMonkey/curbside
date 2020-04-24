@@ -24,16 +24,6 @@ class ScanStoresCommand extends Command
     protected $description = 'Scans for pickup slots at subscribed stores';
 
     /**
-     * Create a new command instance.
-     *
-     * @return void
-     */
-    public function __construct()
-    {
-        parent::__construct();
-    }
-
-    /**
      * Execute the console command.
      *
      * @return mixed
