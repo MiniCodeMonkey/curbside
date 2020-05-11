@@ -46,7 +46,11 @@ Edit `.env`. You will need to at least configure a database. Want to know more a
 ```
 # Run database migrations
 php artisan migrate --seed
+```
 
+> Running this will also fetch stores from each individual chains website, so it will take a few minutes to run.
+
+```
 # Start development server and frontend asset watcher
 php artisan serve
 npm run watch
